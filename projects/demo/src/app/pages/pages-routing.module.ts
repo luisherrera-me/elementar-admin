@@ -107,6 +107,10 @@ const routes: Routes = [
         loadChildren: () => import('./components/datepicker/datepicker.module').then(m => m.DatepickerModule)
       },
       {
+        path: 'components/dashboard',
+        loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
         path: 'components/icon',
         loadChildren: () => import('./components/icon/icon.module').then(m => m.IconModule)
       },
