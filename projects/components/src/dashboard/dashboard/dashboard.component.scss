@@ -1,3 +1,20 @@
 :host {
-  @apply grid w-full h-full;
+  @apply block w-full h-full relative;
+
+  .container {
+    @apply grid w-full h-full gap-6 grid-cols-12 grid-rows-12;
+  }
+
+  .widget {
+    --emr-dashboard-widget-area: span 1 / span 1;
+    grid-area: var(--emr-dashboard-widget-area);
+  }
+
+  .container.cdk-drop-list-dragging .widget:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

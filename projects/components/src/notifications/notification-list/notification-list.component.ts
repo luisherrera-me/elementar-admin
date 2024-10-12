@@ -33,7 +33,7 @@ import {
   }
 })
 export class NotificationListComponent<T extends Notification> implements AfterContentInit {
-  readonly defs = contentChildren(NotificationDefDirective);
+  private _defs = contentChildren(NotificationDefDirective);
   readonly controlsDef = contentChild(NotificationControlsDefDirective);
 
   notifications = input<T[]>([]);
@@ -46,7 +46,7 @@ export class NotificationListComponent<T extends Notification> implements AfterC
   }
 
   ngAfterContentInit() {
-    this.defs().forEach((def: NotificationDefDirective) => {
+    this._defs().forEach((def: NotificationDefDirective) => {
       this._defsMap.set(def.emrNotificationDef(), def.templateRef);
     });
     this._initialized = true;
