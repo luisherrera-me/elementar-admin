@@ -1,10 +1,10 @@
 import { Directive, inject, input, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[emrDashboardWidgetDef]',
+  selector: '[emrGridStackItemDef]',
   standalone: true
 })
-export class DashboardWidgetDefDirective {
+export class GridStackItemDefDirective {
   readonly templateRef = inject(TemplateRef);
-  emrDashboardWidgetDef = input.required<string>();
+  emrGridStackItemDef = input.required<string>();
 }

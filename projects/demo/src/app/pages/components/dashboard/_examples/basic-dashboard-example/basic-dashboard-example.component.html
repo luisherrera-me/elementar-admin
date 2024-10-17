@@ -1,9 +1,9 @@
-<emr-dashboard [widgets]="widgets">
-  <ng-template emrDashboardWidgetDef="sample" let-widget>
+<emr-grid-stack [items]="widgets">
+  <ng-template emrGridStackItemDef="sample" let-widget>
     @defer {
       <app-sample-widget [widget]="widget"/>
     } @loading (minimum 1000ms) {
       Loading...
     }
   </ng-template>
-</emr-dashboard>
+</emr-grid-stack>

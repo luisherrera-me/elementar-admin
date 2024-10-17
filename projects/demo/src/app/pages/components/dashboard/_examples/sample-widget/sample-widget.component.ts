@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Widget } from '@elementar/components/dashboard';
+import { GridStackItem } from '@elementar/components/grid-stack';
 
 @Component({
   selector: 'app-sample-widget',
@@ -9,5 +9,5 @@ import { Widget } from '@elementar/components/dashboard';
   styleUrl: './sample-widget.component.scss'
 })
 export class SampleWidgetComponent {
-  widget = input.required<Widget>();
+  widget = input.required<GridStackItem>();
 }

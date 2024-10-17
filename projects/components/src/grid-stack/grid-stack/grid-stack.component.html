@@ -1,0 +1,8 @@
+@for (item of _items; track item) {
+  <div class="item"
+       [attr.gs-w]="item.w" [attr.gs-h]="item.h"
+       [attr.gs-y]="item.y" [attr.gs-x]="item.x">
+    <ng-container [ngTemplateOutlet]="getItemTemplate(item.type)"
+                  [ngTemplateOutletContext]="{ $implicit: item }"/>
+  </div>
+}
