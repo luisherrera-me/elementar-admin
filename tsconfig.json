@@ -5,8 +5,8 @@
       "@elementar/components/*": [
         "./projects/components/src/*"
       ],
-      "@demo/shared/*": [
-        "./projects/demo/src/app/@shared/*"
+      "@elementar/store/*": [
+        "./projects/store/src/lib/*"
       ],
       "@demo/meta/*": [
         "./projects/demo/src/app/@meta/*"

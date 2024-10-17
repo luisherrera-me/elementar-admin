@@ -6,8 +6,8 @@ import {
   LayoutHeaderComponent,
   LayoutSidebarComponent
 } from '@elementar/components/layout';
-import { SidebarComponent } from '../@app/sidebar/sidebar/sidebar.component';
-import { HeaderComponent } from '../@app/header/header/header.component';
+import { SidebarComponent } from '../@app/sidebar/sidebar.component';
+import { HeaderComponent } from '../@app/header/header.component';
 
 @Component({
   selector: 'app-common',
