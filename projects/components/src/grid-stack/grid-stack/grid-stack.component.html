@@ -1,8 +1,17 @@
 @for (item of _items; track item) {
-  <div class="item"
+  <div class="item" #dragRef="cdkDrag"
        [attr.gs-w]="item.w" [attr.gs-h]="item.h"
-       [attr.gs-y]="item.y" [attr.gs-x]="item.x">
-    <ng-container [ngTemplateOutlet]="getItemTemplate(item.type)"
-                  [ngTemplateOutletContext]="{ $implicit: item }"/>
+       [attr.gs-y]="item.y" [attr.gs-x]="item.x" cdkDrag
+       (cdkDragStarted)="onDragStarted($event, item)"
+       (cdkDragEnded)="onDragEnded($event, item, dragRef)">
+    <div class="item-content">
+      <ng-container [ngTemplateOutlet]="getItemTemplate(item.type)"
+                    [ngTemplateOutletContext]="{ $implicit: item }"/>
+    </div>
   </div>
 }
+<div class="placeholder"
+     [attr.gs-w]="_placeholder.w" [attr.gs-h]="_placeholder.h"
+     [attr.gs-y]="_placeholder.y" [attr.gs-x]="_placeholder.x">
+  <div class="placeholder-content"></div>
+</div>

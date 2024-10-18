@@ -20,7 +20,7 @@ export class BasicDashboardExampleComponent {
       name: 'Sample Widget',
       type: 'sample',
       w: 4,
-      h: 1,
+      h: 2,
       x: 0,
       y: 0
     },
@@ -29,7 +29,7 @@ export class BasicDashboardExampleComponent {
       name: 'Sample Widget',
       type: 'sample',
       w: 4,
-      h: 1,
+      h: 2,
       x: 4,
       y: 0
     },
@@ -40,24 +40,24 @@ export class BasicDashboardExampleComponent {
       x: 8,
       y: 0,
       w: 4,
-      h: 1
+      h: 2
     },
     {
       id: 1,
       name: 'Sample Widget',
       type: 'sample',
       w: 8,
-      h: 2,
+      h: 4,
       x: 0,
-      y: 1
+      y: 2
     },
     {
       id: 2,
       name: 'Sample Widget',
       type: 'sample',
       w: 4,
-      h: 2,
-      y: 1,
+      h: 4,
+      y: 2,
       x: 8
     }
   ];
