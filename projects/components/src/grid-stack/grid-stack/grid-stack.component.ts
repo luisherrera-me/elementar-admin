@@ -1,8 +1,8 @@
-import { Component, contentChildren, effect, input, TemplateRef } from '@angular/core';
+import { Component, contentChildren, effect, inject, input, Renderer2, TemplateRef } from '@angular/core';
 import { GridStackItemDefDirective } from '../grid-stack-item-def.directive';
 import { GridStackItem } from '../types';
 import { NgTemplateOutlet } from '@angular/common';
-import { CdkDrag, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'emr-grid-stack',
@@ -10,8 +10,7 @@ import { CdkDrag, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    CdkDrag,
-    CdkDragPlaceholder,
+    CdkDrag
   ],
   templateUrl: './grid-stack.component.html',
   styleUrl: './grid-stack.component.scss',
@@ -21,6 +20,7 @@ import { CdkDrag, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
   }
 })
 export class GridStackComponent {
+  private _renderer = inject(Renderer2);
   private _defs = contentChildren(GridStackItemDefDirective);
   items = input.required<GridStackItem[]>();
 
@@ -57,7 +57,12 @@ export class GridStackComponent {
   }
 
   onDragStarted(event: any, item: GridStackItem): void {
-    console.log(event, item);
+    console.log(event);
+    const dragElement = event.source.element.nativeElement;
+    const dimensions = dragElement.getBoundingClientRect();
+    this._renderer.setStyle(dragElement, 'max-width', dimensions.width + 'px');
+    this._renderer.setStyle(dragElement, 'top', dimensions.y + 'px');
+    this._renderer.setStyle(dragElement, 'left', dimensions.x + 'px');
     this._isDraggingActive = true;
     this._placeholder = {
       w: item.w,
@@ -68,6 +73,7 @@ export class GridStackComponent {
   }
 
   onDragEnded(event: any, item: GridStackItem, dragRef: CdkDrag): void {
+    const dragElement = event.source.element.nativeElement;
     this._isDraggingActive = false;
     this._placeholder = {
       w: 0,
@@ -75,6 +81,9 @@ export class GridStackComponent {
       x: 0,
       y: 0,
     };
+    this._renderer.removeStyle(dragElement, 'max-width');
+    this._renderer.removeStyle(dragElement, 'top');
+    this._renderer.removeStyle(dragElement, 'left');
     dragRef.reset();
   }
 }

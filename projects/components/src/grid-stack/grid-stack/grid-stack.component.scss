@@ -12,7 +12,7 @@
     left: 0;
 
     &.cdk-drag-dragging {
-      @apply z-50;
+      @apply z-[9999] fixed;
 
       .item-content {
         @apply opacity-90 shadow;
