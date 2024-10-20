@@ -3,7 +3,7 @@
   --emr-grid-stack-gap: theme('gap.2');
   --emr-grid-stack-item-content-border-radius: theme('borderRadius.xl');
 
-  @apply block relative -m-[var(--emr-grid-stack-gap)];
+  @apply block relative;
 
   .item {
     @apply absolute;

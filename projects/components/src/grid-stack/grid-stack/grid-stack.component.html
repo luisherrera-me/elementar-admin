@@ -3,7 +3,8 @@
        [attr.gs-w]="item.w" [attr.gs-h]="item.h"
        [attr.gs-y]="item.y" [attr.gs-x]="item.x" cdkDrag
        (cdkDragStarted)="onDragStarted($event, item)"
-       (cdkDragEnded)="onDragEnded($event, item, dragRef)">
+       (cdkDragEnded)="onDragEnded($event, item, dragRef)"
+       (cdkDragMoved)="onDragMoved($event, item, dragRef)">
     <div class="item-content">
       <ng-container [ngTemplateOutlet]="getItemTemplate(item.type)"
                     [ngTemplateOutletContext]="{ $implicit: item }"/>
