@@ -1,6 +1,6 @@
 import {
   AfterContentInit,
-  afterNextRender, AfterViewChecked,
+  AfterViewChecked,
   Component,
   contentChildren,
   effect,
@@ -49,6 +49,8 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
   protected _isDraggingActive = false;
   private _rootElementWidth = 0;
   private _rootElementHeight = 0;
+  private _placeholderX = 0;
+  private _placeholderY = 0;
 
   constructor() {
     effect(() => {
@@ -97,6 +99,8 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
       x: item.x,
       y: item.y,
     };
+    this._placeholderX = this._placeholder.x;
+    this._placeholderY = this._placeholder.y;
   }
 
   onDragEnded(event: any, item: GridStackItem, dragRef: CdkDrag): void {
@@ -115,8 +119,29 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
   }
 
   onDragMoved(event: any, item: GridStackItem, dragRef: CdkDrag): void {
-    console.log(this._rootElementWidth);
-    console.log(this._rootElementHeight);
+    const yStep = 100;
+    const yStepsCount = this._rootElementHeight / yStep;
+    const xStepsCount = 12;
+    const xStep = this._rootElementWidth / xStepsCount;
+    let x = this._placeholderX + Math.ceil(event.distance.x / xStep);
+
+    if (x <= 0) {
+      x = 0;
+    } else if (x >= (xStepsCount - this._placeholder.w)) {
+      x = xStepsCount - this._placeholder.w;
+    }
+
+    this._placeholder.x = x;
+
+    let y = this._placeholderY + Math.ceil(event.distance.y / yStep);
+
+    if (y <= 0) {
+      y = 0;
+    } else if (y >= (yStepsCount - this._placeholder.h)) {
+      y = yStepsCount - this._placeholder.h;
+    }
+
+    this._placeholder.y = y;
   }
 
   private _calculateRootElementHeight(): void {
