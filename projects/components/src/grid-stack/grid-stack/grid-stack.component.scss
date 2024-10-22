@@ -33,7 +33,12 @@
     }
   }
 
-  &.is-dragging-active {
+  &.dragging {
+    .item,
+    .placeholder {
+      transition: left .3s, top .3s, height .3s, width .3s;
+    }
+
     .placeholder {
       @apply block;
     }

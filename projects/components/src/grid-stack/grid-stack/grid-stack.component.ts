@@ -27,7 +27,7 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
   styleUrl: './grid-stack.component.scss',
   host: {
     'class': 'emr-grid-stack',
-    '[class.is-dragging-active]': '_isDraggingActive',
+    '[class.dragging]': '_isDraggingActive',
   }
 })
 export class GridStackComponent implements AfterViewChecked, AfterContentInit {
@@ -51,6 +51,8 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
   private _rootElementHeight = 0;
   private _placeholderX = 0;
   private _placeholderY = 0;
+  private _placeholderCurrentX = 0;
+  private _placeholderCurrentY = 0;
 
   constructor() {
     effect(() => {
@@ -118,7 +120,7 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
     dragRef.reset();
   }
 
-  onDragMoved(event: any, item: GridStackItem, dragRef: CdkDrag): void {
+  onDragMoved(event: any, dragItem: GridStackItem, dragRef: CdkDrag): void {
     const yStep = 100;
     const yStepsCount = this._rootElementHeight / yStep;
     const xStepsCount = 12;
@@ -131,7 +133,21 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
       x = xStepsCount - this._placeholder.w;
     }
 
-    this._placeholder.x = x;
+    const placeholderRectXStart = x;
+    const placeholderRectXEnd = x + dragItem.w;
+
+    this.items().forEach((item) => {
+      const itemRectXStart = item.x;
+      const itemRectXEnd = item.x + item.w;
+
+      console.log(dragItem.x, x);
+
+      if (itemRectXStart === (placeholderRectXStart + 1) && itemRectXEnd === (placeholderRectXEnd + 1)) {
+        this._placeholder.x = item.x;
+        item.x = dragItem.x;
+        dragItem.x = this._placeholder.x;
+      }
+    });
 
     let y = this._placeholderY + Math.ceil(event.distance.y / yStep);
 
@@ -141,7 +157,8 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
       y = yStepsCount - this._placeholder.h;
     }
 
-    this._placeholder.y = y;
+    this._placeholderCurrentY = y;
+    // this._placeholder.y = y;
   }
 
   private _calculateRootElementHeight(): void {
