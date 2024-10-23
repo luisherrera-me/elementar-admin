@@ -15,6 +15,9 @@ import { GridStackItem } from '../types';
 import { isPlatformServer, NgTemplateOutlet } from '@angular/common';
 import { CdkDrag } from '@angular/cdk/drag-drop';
 
+let placeholderXPosition = 0;
+let offsetX = 0;
+
 @Component({
   selector: 'emr-grid-stack',
   exportAs: 'emrGridStack',
@@ -136,18 +139,12 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
     const placeholderRectXStart = x;
     const placeholderRectXEnd = x + dragItem.w;
 
-    this.items().forEach((item) => {
-      const itemRectXStart = item.x;
-      const itemRectXEnd = item.x + item.w;
+    // detect direction
+    if (placeholderXPosition !== x) {
+      offsetX = placeholderXPosition > x ? -1 : 1
+    }
 
-      console.log(dragItem.x, x);
-
-      if (itemRectXStart === (placeholderRectXStart + 1) && itemRectXEnd === (placeholderRectXEnd + 1)) {
-        this._placeholder.x = item.x;
-        item.x = dragItem.x;
-        dragItem.x = this._placeholder.x;
-      }
-    });
+    placeholderXPosition = x;
 
     let y = this._placeholderY + Math.ceil(event.distance.y / yStep);
 
@@ -159,6 +156,26 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
 
     this._placeholderCurrentY = y;
     // this._placeholder.y = y;
+
+    const placeholderRectYStart = y;
+    const placeholderRectYEnd = y + dragItem.h;
+
+    this.items().forEach((item) => {
+      const itemRectXStart = item.x;
+      const itemRectXEnd = item.x + item.w;
+
+      const itemRectYStart = item.y;
+      const itemRectYEnd = item.y + item.h;
+
+      if (
+        itemRectXStart === (placeholderRectXStart + offsetX) &&
+        itemRectXEnd === (placeholderRectXEnd + offsetX)
+      ) {
+        this._placeholder.x = item.x;
+        item.x = dragItem.x;
+        dragItem.x = this._placeholder.x;
+      }
+    });
   }
 
   private _calculateRootElementHeight(): void {
