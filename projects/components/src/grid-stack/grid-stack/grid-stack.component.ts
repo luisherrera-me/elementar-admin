@@ -160,14 +160,18 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
 
     placeholderYPosition = y;
 
-    console.log(offsetX);
-
     this._placeholder.y = y;
     this._placeholder.x = x;
 
-    this.items().forEach((item) => {
+    for (const item of this.items()) {
+      if (item.id === dragItem.id) {
+        continue;
+      }
 
-    });
+      if (item.x >= this._placeholder.x) {
+        console.log(item);
+      }
+    }
   }
 
   private _calculateRootElementHeight(): void {

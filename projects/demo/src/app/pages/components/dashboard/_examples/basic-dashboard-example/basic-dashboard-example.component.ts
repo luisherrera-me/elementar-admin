@@ -46,7 +46,7 @@ export class BasicDashboardExampleComponent {
       h: 2
     },
     {
-      id: 1,
+      id: 4,
       name: 'Sample Widget',
       type: 'sample',
       content: 'Sample Widget 4',
@@ -56,7 +56,7 @@ export class BasicDashboardExampleComponent {
       y: 2
     },
     {
-      id: 2,
+      id: 5,
       name: 'Sample Widget',
       type: 'sample',
       content: 'Sample Widget 5',
