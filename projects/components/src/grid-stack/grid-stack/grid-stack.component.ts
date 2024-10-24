@@ -16,7 +16,9 @@ import { isPlatformServer, NgTemplateOutlet } from '@angular/common';
 import { CdkDrag } from '@angular/cdk/drag-drop';
 
 let placeholderXPosition = 0;
+let placeholderYPosition = 0;
 let offsetX = 0;
+let offsetY = 0;
 
 @Component({
   selector: 'emr-grid-stack',
@@ -128,16 +130,13 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
     const yStepsCount = this._rootElementHeight / yStep;
     const xStepsCount = 12;
     const xStep = this._rootElementWidth / xStepsCount;
-    let x = this._placeholderX + Math.ceil(event.distance.x / xStep);
+    let x = this._placeholderX + Math.round(event.distance.x / xStep);
 
     if (x <= 0) {
       x = 0;
     } else if (x >= (xStepsCount - this._placeholder.w)) {
       x = xStepsCount - this._placeholder.w;
     }
-
-    const placeholderRectXStart = x;
-    const placeholderRectXEnd = x + dragItem.w;
 
     // detect direction
     if (placeholderXPosition !== x) {
@@ -146,7 +145,7 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
 
     placeholderXPosition = x;
 
-    let y = this._placeholderY + Math.ceil(event.distance.y / yStep);
+    let y = this._placeholderY + Math.round(event.distance.y / yStep);
 
     if (y <= 0) {
       y = 0;
@@ -154,27 +153,20 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
       y = yStepsCount - this._placeholder.h;
     }
 
-    this._placeholderCurrentY = y;
-    // this._placeholder.y = y;
+    // detect direction
+    if (placeholderYPosition !== y) {
+      offsetY = placeholderYPosition > y ? -1 : 1
+    }
 
-    const placeholderRectYStart = y;
-    const placeholderRectYEnd = y + dragItem.h;
+    placeholderYPosition = y;
+
+    console.log(offsetX);
+
+    this._placeholder.y = y;
+    this._placeholder.x = x;
 
     this.items().forEach((item) => {
-      const itemRectXStart = item.x;
-      const itemRectXEnd = item.x + item.w;
 
-      const itemRectYStart = item.y;
-      const itemRectYEnd = item.y + item.h;
-
-      if (
-        itemRectXStart === (placeholderRectXStart + offsetX) &&
-        itemRectXEnd === (placeholderRectXEnd + offsetX)
-      ) {
-        this._placeholder.x = item.x;
-        item.x = dragItem.x;
-        dragItem.x = this._placeholder.x;
-      }
     });
   }
 
