@@ -160,16 +160,22 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
 
     placeholderYPosition = y;
 
-    this._placeholder.y = y;
-    this._placeholder.x = x;
+    if (y !== this._placeholder.y || x !== this._placeholder.x) {
+      this._placeholder.y = y;
+      this._placeholder.x = x;
 
-    for (const item of this.items()) {
-      if (item.id === dragItem.id) {
-        continue;
-      }
+      for (const item of this.items()) {
+        if (item.id === dragItem.id) {
+          continue;
+        }
 
-      if (item.x >= this._placeholder.x) {
-        console.log(item);
+        if (
+          ((item.x >= this._placeholder.x) && (item.x + item.w <= this._placeholder.x + this._placeholder.w)) ||
+          ((item.x < this._placeholder.x) && (item.x + item.w > this._placeholder.x)) ||
+          ((this._placeholder.x + this._placeholder.w) > item.x) && (this._placeholder.x < item.x)
+        ) {
+          console.log('result: ', item);
+        }
       }
     }
   }
