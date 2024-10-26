@@ -5,7 +5,6 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./overview/overview.component').then(c => c.OverviewComponent),
-    title: 'Dashboard'
   }
 ];
 
@@ -13,4 +12,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+export class GridStackRoutingModule { }

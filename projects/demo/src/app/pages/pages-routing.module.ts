@@ -107,8 +107,8 @@ const routes: Routes = [
         loadChildren: () => import('./components/datepicker/datepicker.module').then(m => m.DatepickerModule)
       },
       {
-        path: 'components/dashboard',
-        loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: 'components/grid-stack',
+        loadChildren: () => import('./components/grid-stack/grid-stack.module').then(m => m.GridStackModule)
       },
       {
         path: 'components/icon',

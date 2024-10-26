@@ -258,8 +258,8 @@ export class SidebarComponent implements OnInit {
         {
           key: uuid(),
           type: 'link',
-          name: 'Dashboard',
-          link: '/pages/components/dashboard'
+          name: 'Grid Stack',
+          link: '/pages/components/grid-stack'
         },
         {
           key: uuid(),

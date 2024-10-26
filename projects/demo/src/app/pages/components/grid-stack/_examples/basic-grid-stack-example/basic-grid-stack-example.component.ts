@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { SampleWidgetComponent } from '../sample-widget/sample-widget.component';
 import { GridStackComponent, GridStackItem, GridStackItemDefDirective } from '@elementar/components/grid-stack';
+import { SampleWidgetComponent } from '../sample-widget/sample-widget.component';
 
 @Component({
-  selector: 'app-basic-dashboard-example',
+  selector: 'app-basic-grid-stack-example',
   standalone: true,
   imports: [
     SampleWidgetComponent,
     GridStackComponent,
     GridStackItemDefDirective
   ],
-  templateUrl: './basic-dashboard-example.component.html',
-  styleUrl: './basic-dashboard-example.component.scss'
+  templateUrl: './basic-grid-stack-example.component.html',
+  styleUrl: './basic-grid-stack-example.component.scss'
 })
-export class BasicDashboardExampleComponent {
+export class BasicGridStackExampleComponent {
   widgets: GridStackItem[] = [
     {
       id: 1,
