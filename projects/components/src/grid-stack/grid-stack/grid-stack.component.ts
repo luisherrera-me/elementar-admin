@@ -161,20 +161,41 @@ export class GridStackComponent implements AfterViewChecked, AfterContentInit {
     placeholderYPosition = y;
 
     if (y !== this._placeholder.y || x !== this._placeholder.x) {
+      this._placeholder.y = y;
+      this._placeholder.x = x;
+
       for (const item of this.items()) {
         if (item.id === dragItem.id) {
           continue;
         }
 
+        const itemStartX = item.x;
+        const itemEndX = itemStartX + item.w;
+
+        const itemStartY = item.y;
+        const itemEndY = itemStartY + item.h;
+
+        const dragItemStartX = x;
+        const dragItemEndX = dragItemStartX + dragItem.w;
+
+        const dragItemStartY = y;
+        const dragItemEndY = dragItemStartY + dragItem.h;
+
         if (
-          ((item.x >= x) && (item.x + item.w <= x + this._placeholder.w)) ||
-          ((item.x < x) && (item.x + item.w > x)) ||
-          ((x + this._placeholder.w) > item.x) && (x < item.x)
+          itemStartX === dragItemStartX && itemEndX === dragItemEndX &&
+          itemStartY === dragItemStartY && itemEndY === dragItemEndY
         ) {
-          this._placeholder.y = y;
-          this._placeholder.x = x;
-          console.log('result: ', item);
+          console.log(item);
         }
+
+        // if (
+        //   ((item.x >= x) && (item.x + item.w <= x + this._placeholder.w)) && (y >= item.y) && ((item.y + item.h) > y) ||
+        //   ((item.x <= x) && (item.x + item.w >= x)) && (y >= item.y) && ((item.y + item.h) > y) ||
+        //   ((x + this._placeholder.w) > item.x) && (x < item.x) && (y >= item.y) && ((item.y + item.h) > y)
+        // ) {
+        //
+        //   console.log('result: ', item);
+        // }
       }
     }
   }
