@@ -1,5 +1,5 @@
 html {
-  @apply antialiased leading-tight min-h-screen;
+  @apply antialiased leading-tight min-h-screen bg-[var(--emr-background)] text-[var(--emr-on-background)];
 }
 
 body {
@@ -28,15 +28,6 @@ body {
 
 .mdc-notched-outline__notch {
   border-right: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-serif;
 }
 
 input.emr-number-input-no-spinners::-webkit-outer-spin-button,

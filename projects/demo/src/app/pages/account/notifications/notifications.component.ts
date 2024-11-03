@@ -3,7 +3,7 @@ import { PageComponent } from '@demo/meta/page/page.component';
 import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 import {
   Notification, NotificationControlsDefDirective, NotificationDefDirective,
-  NotificationListComponent, NotificationPropsDirective,
+  NotificationListComponent, NotificationPropsDirective, NotificationSkeletonComponent,
 } from '@elementar/components/notifications';
 import { MatCellDef } from '@angular/material/table';
 import { NgTemplateOutlet } from '@angular/common';
@@ -33,7 +33,8 @@ import { InviteToEditFilesInFolderNotification, MentionedInCommentNotification }
     MatMenu,
     MatMenuItem,
     MatIconButton,
-    MatMenuTrigger
+    MatMenuTrigger,
+    NotificationSkeletonComponent
   ],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss'
@@ -45,13 +46,13 @@ export class NotificationsComponent {
         id: 1,
         name: 'Justin Hansen',
         username: 'justin.hansen',
-        avatarUrl: 'https://avatar.iran.liara.run/public'
+        avatarUrl: 'assets/avatars/6.svg'
       },
       notifier: {
         id: 2,
         name: 'Elma Johnson',
         username: 'elma.johnson',
-        avatarUrl: 'https://avatar.iran.liara.run/public'
+        avatarUrl: 'assets/avatars/4.svg'
       },
       payload: {
         content: 'what did you say?'
@@ -65,13 +66,13 @@ export class NotificationsComponent {
         id: 3,
         name: 'Johnny Gladden',
         username: 'johnny.gladden',
-        avatarUrl: 'https://avatar.iran.liara.run/public'
+        avatarUrl: 'assets/avatars/3.svg'
       },
       notifier: {
         id: 4,
         name: 'Angela Naylor',
         username: 'angela.naylor',
-        avatarUrl: 'https://avatar.iran.liara.run/public'
+        avatarUrl: 'assets/avatars/1.svg'
       },
       payload: {
         folderName: 'My New Project'
@@ -85,13 +86,13 @@ export class NotificationsComponent {
         id: 1,
         name: 'Justin Hansen',
         username: 'justin.hansen',
-        avatarUrl: 'https://avatar.iran.liara.run/public'
+        avatarUrl: 'assets/avatars/7.svg'
       },
       notifier: {
         id: 2,
         name: 'Elma Johnson',
         username: 'elma.johnson',
-        avatarUrl: 'https://avatar.iran.liara.run/public'
+        avatarUrl: 'assets/avatars/8.svg'
       },
       payload: {
         content: 'what did you say?'

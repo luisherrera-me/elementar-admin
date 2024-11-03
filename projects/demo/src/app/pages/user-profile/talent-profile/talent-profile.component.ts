@@ -29,19 +29,51 @@ export class TalentProfileComponent {
   followed = false;
   peopleAlsoViewed: Person[] = [
     {
-      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/female/44.jpg',
+      avatarUrl: 'assets/avatars/5.svg',
       name: 'Beaulah Hansmann',
       occupation: 'CEO of amazing company'
     },
     {
-      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/female/45.jpg',
+      avatarUrl: 'assets/avatars/6.svg',
       name: 'Laree Alaman',
       occupation: 'CEO of amazing company'
     },
     {
-      avatarUrl: 'https://xsgames.co/randomusers/assets/avatars/male/45.jpg',
+      avatarUrl: 'assets/avatars/7.svg',
       name: 'Tom Hearron',
       occupation: 'Software engineer'
+    }
+  ];
+  languages = [
+    {
+      name: 'English',
+      level: 'Native'
+    },
+    {
+      name: 'German',
+      level: 'Fluent'
+    },
+    {
+      name: 'Spanish',
+      level: 'Basic'
+    }
+  ];
+  skills = [
+    {
+      name: 'Typescript',
+      level: 'Good'
+    },
+    {
+      name: 'Angular',
+      level: 'Medium'
+    },
+    {
+      name: 'Rest API',
+      level: 'Good'
+    },
+    {
+      name: 'NestJS',
+      level: 'Medium'
     }
   ];
 

@@ -21,8 +21,8 @@ import {
 import { PageComponent } from '@demo/meta/page/page.component';
 import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 import {
-  NavigationWithSimpleThemeExampleComponent
-} from '../_examples/navigation-with-simple-theme-example/navigation-with-simple-theme-example.component';
+  NavigationWithBadgesExampleComponent
+} from '../_examples/navigation-with-badges-example/navigation-with-badges-example.component';
 
 @Component({
   selector: 'app-overview',
@@ -37,7 +37,7 @@ import {
     NavigationSecondaryThemeExampleComponent,
     PageComponent,
     PageContentDirective,
-    NavigationWithSimpleThemeExampleComponent
+    NavigationWithBadgesExampleComponent
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'

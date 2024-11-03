@@ -56,32 +56,6 @@ export class SidebarComponent implements OnInit {
 
   navItems: NavigationItem[] = [
     {
-      key: 'customization',
-      type: 'group',
-      name: 'Customization',
-      icon: 'tune',
-      children: [
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Colors',
-          link: '/pages/customization/colors'
-        },
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Themes',
-          link: '/pages/customization/themes'
-        },
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Typography',
-          link: '/pages/customization/typography'
-        }
-      ]
-    },
-    {
       key: 'dashboard',
       type: 'group',
       name: 'Dashboard',
@@ -106,6 +80,37 @@ export class SidebarComponent implements OnInit {
           link: '/pages/dashboard/finance'
         }
       ]
+    },
+    {
+      key: 'theme',
+      type: 'group',
+      name: 'Theme',
+      icon: 'tune',
+      children: [
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Colors',
+          link: '/pages/customization/colors'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Prebuilt Themes',
+          link: '/pages/customization/themes'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Typography',
+          link: '/pages/customization/typography'
+        }
+      ]
+    },
+    {
+      key: 'headingFeatures',
+      type: 'heading',
+      name: 'Features'
     },
     {
       key: 'navigation',
@@ -224,6 +229,7 @@ export class SidebarComponent implements OnInit {
       type: 'group',
       icon: 'grid_view',
       name: 'Components',
+      badge: 23,
       children: [
         {
           key: uuid(),
@@ -552,6 +558,32 @@ export class SidebarComponent implements OnInit {
       ]
     },
     {
+      key: 'micro-charts',
+      type: 'group',
+      icon: 'leaderboard',
+      name: 'Micro Charts',
+      children: [
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Line Chart',
+          link: '/pages/micro-charts/line-chart'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Bar Chart',
+          link: '/pages/micro-charts/bar-chart'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Pie Chart',
+          link: '/pages/micro-charts/pie-chart'
+        }
+      ]
+    },
+    {
       key: 'store',
       type: 'group',
       icon: 'hard_drive',
@@ -584,36 +616,15 @@ export class SidebarComponent implements OnInit {
       ],
     },
     {
-      key: 'micro-charts',
-      type: 'group',
-      icon: 'leaderboard',
-      name: 'Micro Charts',
-      children: [
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Line Chart',
-          link: '/pages/micro-charts/line-chart'
-        },
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Bar Chart',
-          link: '/pages/micro-charts/bar-chart'
-        },
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Pie Chart',
-          link: '/pages/micro-charts/pie-chart'
-        }
-      ]
+      key: 'headingPages',
+      type: 'heading',
+      name: 'Pages'
     },
     {
       key: 'auth',
       type: 'group',
       icon: 'lock',
-      name: 'Auth',
+      name: 'Authentication',
       children: [
         {
           key: uuid(),

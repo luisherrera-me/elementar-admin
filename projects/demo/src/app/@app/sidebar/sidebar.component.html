@@ -1,6 +1,6 @@
 <emr-sidebar [compact]="compact" class="sidebar">
   <emr-sidebar-header class="header">
-    <div class="h-20 flex items-center w-full justify-between border-b dark:border-b-inverse">
+    <div class="h-20 flex items-center w-full justify-between border-b">
       <a routerLink="/" emrSidebarCompactViewMode class="logo justify-center">EL</a>
       <a routerLink="/" emrSidebarFullViewMode class="logo">ELEMENTAR</a>
       <button mat-icon-button (click)="compact = !compact" class="sidebar-toggle">
@@ -17,10 +17,10 @@
   </emr-sidebar-body>
   <emr-sidebar-footer class="footer">
     <div emrSidebarCompactViewMode>
-      <emr-dicebear/>
+      <emr-dicebear src="assets/avatars/1.svg"/>
     </div>
     <div emrSidebarFullViewMode>
-      <emr-sidebar-toolbar></emr-sidebar-toolbar>
+      <emr-sidebar-toolbar/>
     </div>
   </emr-sidebar-footer>
 </emr-sidebar>
