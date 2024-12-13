@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { CurrencyPipe } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;
@@ -24,10 +23,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 @Component({
   selector: 'app-table-with-sticky-header-example',
-  standalone: true,
   imports: [
     MatTableModule,
-    CurrencyPipe
   ],
   templateUrl: './table-with-sticky-header-example.component.html',
   styleUrl: './table-with-sticky-header-example.component.scss'

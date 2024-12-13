@@ -4,7 +4,6 @@ import { PageComponent } from '@demo/meta/page/page.component';
 import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 
 @Component({
-  standalone: true,
   imports: [
     PageComponent,
     PageContentDirective

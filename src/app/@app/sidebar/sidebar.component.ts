@@ -1,16 +1,10 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { Location } from '@angular/common';
-import { MatRipple } from '@angular/material/core';
-import { EmrNavigationModule, NavigationItem } from '@elementar/components/navigation';
-import { OrderByPipe } from '@elementar/components/core';
-import { DicebearComponent } from '@elementar/components/avatar';
-import { MatIconButton } from '@angular/material/button';
+import { NavigationItem } from '@elementar/components/navigation';
 import {
   SidebarBodyComponent,
-  SidebarCompactViewModeDirective,
   SidebarComponent as EmrSidebarComponent,
   SidebarFooterComponent, SidebarHeaderComponent, SidebarNavComponent
 } from '@elementar/components/sidebar';
@@ -18,17 +12,9 @@ import { ToolbarComponent } from '@elementar/store/sidebar';
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   imports: [
-    MatIcon,
     RouterLink,
-    EmrNavigationModule,
-    MatRipple,
-    OrderByPipe,
-    DicebearComponent,
-    MatIconButton,
     SidebarBodyComponent,
-    SidebarCompactViewModeDirective,
     EmrSidebarComponent,
     SidebarFooterComponent,
     SidebarHeaderComponent,
@@ -47,8 +33,7 @@ export class SidebarComponent implements OnInit {
   height: string | null = '200px';
   compact = false;
 
-  @ViewChild('navigation', { static: true })
-  navigation!: any;
+  readonly navigation = viewChild.required<any>('navigation');
 
   navItems: NavigationItem[] = [
     {

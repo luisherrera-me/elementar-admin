@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
-import { EmrSkeletonModule } from '@elementar/components/skeleton';
+import {
+  SkeletonBlockComponent,
+  SkeletonCircleComponent,
+  SkeletonComponent,
+  SkeletonLineComponent
+} from '@elementar/components/skeleton';
 
 @Component({
   selector: 'app-basic-skeleton-example',
-  standalone: true,
   imports: [
-    EmrSkeletonModule
+    SkeletonCircleComponent,
+    SkeletonLineComponent,
+    SkeletonBlockComponent,
+    SkeletonComponent
   ],
   templateUrl: './basic-skeleton-example.component.html',
   styleUrl: './basic-skeleton-example.component.scss'

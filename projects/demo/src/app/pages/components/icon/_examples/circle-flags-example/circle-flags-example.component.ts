@@ -3,7 +3,6 @@ import { IconComponent } from '@elementar/components/icon';
 
 @Component({
   selector: 'app-circle-flags-example',
-  standalone: true,
   imports: [
     IconComponent
   ],

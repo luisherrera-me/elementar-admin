@@ -6,7 +6,6 @@ import { LayoutSidebarComponent } from '@elementar/components/layout';
 
 @Component({
   selector: 'app-layout-header-with-sidebar-example',
-  standalone: true,
   imports: [
     LayoutBodyComponent,
     LayoutComponent,

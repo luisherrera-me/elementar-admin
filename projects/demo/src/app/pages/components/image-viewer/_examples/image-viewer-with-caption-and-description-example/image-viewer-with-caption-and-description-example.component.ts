@@ -7,7 +7,6 @@ import {
 
 @Component({
   selector: 'app-image-viewer-with-caption-and-description-example',
-  standalone: true,
   imports: [
     ImageViewerDirective,
     ImageViewerPictureDirective,

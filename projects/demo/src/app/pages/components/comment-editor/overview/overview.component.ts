@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import {
-  BasicCommandBarExampleComponent
-} from '../../command-bar/_examples/basic-command-bar-example/basic-command-bar-example.component';
 import { PageComponent } from '@demo/meta/page/page.component';
 import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 import { PlaygroundComponent } from '@demo/meta/playground/playground.component';
@@ -26,12 +23,13 @@ import {
 import {
   CommentEditorCustomButtonLabelsExampleComponent
 } from '../_examples/comment-editor-custom-button-labels-example/comment-editor-custom-button-labels-example.component';
+import {
+  CommentEditorWithMaxContentHeightExampleComponent
+} from '../_examples/comment-editor-with-max-content-height-example/comment-editor-with-max-content-height-example.component';
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [
-    BasicCommandBarExampleComponent,
     PageComponent,
     PageContentDirective,
     PlaygroundComponent,
@@ -41,7 +39,8 @@ import {
     CommentEditorWithUploadErrorExampleComponent,
     CommentEditorWithCustomIconsExampleComponent,
     CommentEditorCancelButtonAlwaysVisibleExampleComponent,
-    CommentEditorCustomButtonLabelsExampleComponent
+    CommentEditorCustomButtonLabelsExampleComponent,
+    CommentEditorWithMaxContentHeightExampleComponent
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'

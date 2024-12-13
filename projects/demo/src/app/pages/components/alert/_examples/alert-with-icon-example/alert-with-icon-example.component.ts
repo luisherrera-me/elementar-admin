@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { EmrAlertModule } from '@elementar/components/alert';
 import { MatIcon } from '@angular/material/icon';
+import { AlertComponent, AlertIconDirective } from '@elementar/components/alert';
 
 @Component({
   selector: 'app-alert-with-icon-example',
-  standalone: true,
   imports: [
-    EmrAlertModule,
-    MatIcon
+    MatIcon,
+    AlertIconDirective,
+    AlertComponent
   ],
   templateUrl: './alert-with-icon-example.component.html',
   styleUrl: './alert-with-icon-example.component.scss'

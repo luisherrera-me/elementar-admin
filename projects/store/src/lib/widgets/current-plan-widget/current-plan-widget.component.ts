@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { DASHBOARD, Widget } from '@elementar/components/dashboard';
 
 @Component({
-  selector: 'emr-current-plan-widget',
-  standalone: true,
-  imports: [
-    MatButton,
-    RouterLink
-  ],
-  templateUrl: './current-plan-widget.component.html',
-  styleUrl: './current-plan-widget.component.scss'
+    selector: 'emr-current-plan-widget',
+    imports: [
+        MatButton,
+        RouterLink
+    ],
+    templateUrl: './current-plan-widget.component.html',
+    styleUrl: './current-plan-widget.component.scss'
 })
-export class CurrentPlanWidgetComponent {
+export class CurrentPlanWidgetComponent implements OnInit {
+  private _dashboard = inject<any>(DASHBOARD, { optional: true });
 
+  widget = input<Widget>();
+
+  ngOnInit() {
+    if (this._dashboard && this.widget()) {
+      this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+    }
+  }
 }

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { EmrResizableContainerModule } from '@elementar/components/resizable-container';
+import { ResizableContainerComponent } from '@elementar/components/resizable-container';
 
 @Component({
   selector: 'app-basic-resizable-container-example',
-  standalone: true,
   imports: [
-    EmrResizableContainerModule
+    ResizableContainerComponent
   ],
   templateUrl: './basic-resizable-container-example.component.html',
   styleUrl: './basic-resizable-container-example.component.scss'

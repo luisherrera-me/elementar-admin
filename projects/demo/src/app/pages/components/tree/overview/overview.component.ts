@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import {
-  BasicDividerExampleComponent
-} from '../../divider/_examples/basic-divider-example/basic-divider-example.component';
 import { PlaygroundComponent } from '@demo/meta/playground/playground.component';
 import { BasicTreeExampleComponent } from '../_examples/basic-tree-example/basic-tree-example.component';
 import {
@@ -12,9 +9,7 @@ import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [
-    BasicDividerExampleComponent,
     PlaygroundComponent,
     BasicTreeExampleComponent,
     TreeWithDynamicDataExampleComponent,

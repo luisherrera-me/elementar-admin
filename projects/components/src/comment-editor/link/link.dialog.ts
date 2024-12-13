@@ -13,7 +13,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'emr-link',
-  standalone: true,
   imports: [
     MatButton,
     MatDialogActions,

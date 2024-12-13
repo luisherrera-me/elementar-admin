@@ -3,7 +3,6 @@ import { MarqueeComponent } from '@elementar/components/marquee';
 
 @Component({
   selector: 'app-marquee-pause-on-hover-example',
-  standalone: true,
   imports: [
     MarqueeComponent
   ],

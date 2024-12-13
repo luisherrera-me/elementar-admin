@@ -2,32 +2,31 @@ import {
   AfterContentInit,
   ChangeDetectorRef,
   Component,
-  ContentChildren, DestroyRef,
+  DestroyRef,
   inject,
   Input,
-  QueryList
+  contentChildren
 } from '@angular/core';
 import { NavigationApiService } from '../navigation-api.service';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'emr-navigation-group-menu',
-  exportAs: 'emrNavigationGroupMenu',
-  templateUrl: './navigation-group-menu.component.html',
-  styleUrls: ['./navigation-group-menu.component.scss'],
-  host: {
-    'class': 'emr-navigation-group-menu',
-    '[class.is-active]': 'active'
-  }
+    selector: 'emr-navigation-group-menu',
+    exportAs: 'emrNavigationGroupMenu',
+    templateUrl: './navigation-group-menu.component.html',
+    styleUrls: ['./navigation-group-menu.component.scss'],
+    host: {
+        'class': 'emr-navigation-group-menu',
+        '[class.is-active]': 'active'
+    }
 })
 export class NavigationGroupMenuComponent implements AfterContentInit {
   readonly api = inject(NavigationApiService);
   private _cdr = inject(ChangeDetectorRef);
   private _destroyRef = inject(DestroyRef);
 
-  @ContentChildren(NavigationItemComponent, { descendants: true, emitDistinctChangesOnly: true })
-  private _items!: QueryList<NavigationItemComponent>;
+  readonly _items = contentChildren(NavigationItemComponent, { descendants: true });
 
   @Input()
   key: any;
@@ -48,7 +47,7 @@ export class NavigationGroupMenuComponent implements AfterContentInit {
   }
 
   private _detectGroupIsActive() {
-    const isGroupActive = this._items.filter(
+    const isGroupActive = this._items().filter(
       itemComponent => this.api.isItemActive(itemComponent.key)
     ).length > 0;
 

@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { EmrUploadModule, UploadFileSelectedEvent, UploadTriggerDirective } from '@elementar/components/upload';
+import { UploadFileSelectedEvent, UploadTriggerDirective } from '@elementar/components/upload';
 import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-basic-upload-example',
-  standalone: true,
   imports: [
     MatButton,
-    EmrUploadModule,
     JsonPipe,
     UploadTriggerDirective
   ],

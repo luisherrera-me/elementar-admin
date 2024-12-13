@@ -1,4 +1,4 @@
-import { afterNextRender, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { afterNextRender, Component, ElementRef, inject, input, viewChild } from '@angular/core';
 import { ThemeManagerService } from '@elementar/components/core';
 import * as echarts from 'echarts/core';
 import {
@@ -12,21 +12,23 @@ import {
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 import { LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
+import { Dashboard, DASHBOARD, Widget } from '@elementar/components/dashboard';
 
 @Component({
-  selector: 'emr-visitor-insights-widget',
-  standalone: true,
-  imports: [],
-  templateUrl: './visitor-insights-widget.component.html',
-  styleUrl: './visitor-insights-widget.component.scss'
+    selector: 'emr-visitor-insights-widget',
+    imports: [],
+    templateUrl: './visitor-insights-widget.component.html',
+    styleUrl: './visitor-insights-widget.component.scss'
 })
 export class VisitorInsightsWidgetComponent {
   private _elementRef = inject(ElementRef);
   private _themeManager = inject(ThemeManagerService);
   private _observer: ResizeObserver;
+  private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
 
-  @ViewChild('chartRef', { read: ElementRef, static: true })
-  private _chartRef: ElementRef;
+  widget = input<Widget>();
+
+  readonly _chartRef = viewChild.required('chartRef', { read: ElementRef });
 
   constructor() {
     afterNextRender(() => {
@@ -95,10 +97,14 @@ export class VisitorInsightsWidgetComponent {
           }
         ]
       };
-      const chart = echarts.init(this._chartRef.nativeElement, this._themeManager.getPreferredColorScheme());
+      const chart = echarts.init(this._chartRef().nativeElement, this._themeManager.getPreferredColorScheme());
       chart.setOption(option);
       this._observer = new ResizeObserver(() => chart.resize());
       this._observer.observe(this._elementRef.nativeElement);
+
+      if (this._dashboard && this.widget()) {
+        this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+      }
     });
   }
 

@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { EmrPinInputModule } from '@elementar/components/pin-input';
 import { FormsModule } from '@angular/forms';
+import { PinInputComponent } from '@elementar/components/pin-input';
 
 @Component({
   selector: 'app-basic-pin-input-example',
-  standalone: true,
   imports: [
-    EmrPinInputModule,
-    FormsModule
-
+    FormsModule,
+    PinInputComponent
   ],
   templateUrl: './basic-pin-input-example.component.html',
   styleUrl: './basic-pin-input-example.component.scss'

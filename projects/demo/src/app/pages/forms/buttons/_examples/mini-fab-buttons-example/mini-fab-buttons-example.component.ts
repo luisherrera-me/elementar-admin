@@ -4,7 +4,6 @@ import { MatMiniFabButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-mini-fab-buttons-example',
-  standalone: true,
   imports: [
     MatIcon,
     MatMiniFabButton

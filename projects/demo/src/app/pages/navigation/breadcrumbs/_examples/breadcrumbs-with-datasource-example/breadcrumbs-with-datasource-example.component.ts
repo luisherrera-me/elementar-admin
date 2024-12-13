@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
-import { EmrBreadcrumbsModule } from '@elementar/components/breadcrumbs';
 import { RouterLink } from '@angular/router';
+import {
+  BreadcrumbActiveItemDefDirective,
+  BreadcrumbItemComponent,
+  BreadcrumbItemDefDirective, BreadcrumbsComponent,
+  BreadcrumbSeparatorComponent, BreadcrumbSeparatorDefDirective
+} from '@elementar/components/breadcrumbs';
 
 @Component({
   selector: 'app-breadcrumbs-with-datasource-example',
-  standalone: true,
   imports: [
-    EmrBreadcrumbsModule,
-    RouterLink
+    RouterLink,
+    BreadcrumbSeparatorComponent,
+    BreadcrumbItemComponent,
+    BreadcrumbItemDefDirective,
+    BreadcrumbSeparatorDefDirective,
+    BreadcrumbActiveItemDefDirective,
+    BreadcrumbsComponent
   ],
   templateUrl: './breadcrumbs-with-datasource-example.component.html',
   styleUrl: './breadcrumbs-with-datasource-example.component.scss'

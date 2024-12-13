@@ -1,14 +1,16 @@
 import { booleanAttribute, Component, ElementRef, inject, Input, Renderer2 } from '@angular/core';
 import { AnnouncementType } from '../types';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'emr-announcement',
-  exportAs: 'emrAnnouncement',
-  templateUrl: './announcement.component.html',
-  styleUrl: './announcement.component.scss',
-  host: {
-    'class': 'emr-announcement'
-  }
+    selector: 'emr-announcement',
+    exportAs: 'emrAnnouncement',
+    templateUrl: './announcement.component.html',
+    styleUrl: './announcement.component.scss',
+    host: {
+        'class': 'emr-announcement'
+    },
+    imports: [MatIcon]
 })
 export class AnnouncementComponent {
   private _elementRef = inject(ElementRef);

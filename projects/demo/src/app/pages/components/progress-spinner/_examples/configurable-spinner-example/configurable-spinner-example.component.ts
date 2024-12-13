@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
@@ -9,10 +8,7 @@ import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-configurable-spinner-example',
-  standalone: true,
   imports: [
-    MatCard,
-    MatCardContent,
     MatRadioGroup,
     MatRadioButton,
     FormsModule,

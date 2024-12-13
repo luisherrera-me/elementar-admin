@@ -12,7 +12,6 @@ import {
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [
     PageComponent,
     PageContentDirective,

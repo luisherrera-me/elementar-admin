@@ -5,7 +5,6 @@ import { LayoutFooterComponent } from '@elementar/components/layout';
 
 @Component({
   selector: 'app-layout-footer-example',
-  standalone: true,
   imports: [
     LayoutBodyComponent,
     LayoutComponent,

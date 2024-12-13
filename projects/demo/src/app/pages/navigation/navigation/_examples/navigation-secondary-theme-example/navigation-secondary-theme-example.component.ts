@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { EmrNavigationModule } from '@elementar/components/navigation';
+import { NavigationComponent, NavigationItemComponent } from '@elementar/components/navigation';
 
 @Component({
   selector: 'app-navigation-secondary-theme-example',
-  standalone: true,
   imports: [
-    EmrNavigationModule
+    NavigationItemComponent,
+    NavigationComponent
   ],
   templateUrl: './navigation-secondary-theme-example.component.html',
   styleUrl: './navigation-secondary-theme-example.component.scss'

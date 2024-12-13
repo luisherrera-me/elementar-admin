@@ -1,5 +1,6 @@
-import { Component, ContentChild } from '@angular/core';
+import { Component, contentChild, TemplateRef } from '@angular/core';
 import { TimelineItemIndicatorDirective } from '../timeline-item-indicator.directive';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'emr-timeline-item',
@@ -8,9 +9,13 @@ import { TimelineItemIndicatorDirective } from '../timeline-item-indicator.direc
   styleUrl: './timeline-item.component.scss',
   host: {
     'class': 'emr-timeline-item'
-  }
+  },
+  imports: [NgTemplateOutlet]
 })
 export class TimelineItemComponent {
-  @ContentChild(TimelineItemIndicatorDirective)
-  readonly indicatorRef: TimelineItemIndicatorDirective;
+  readonly indicatorRef = contentChild(TimelineItemIndicatorDirective);
+
+  get indicatorTemplateRef() {
+    return this.indicatorRef()?.templateRef as TemplateRef<any>;
+  }
 }

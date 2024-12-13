@@ -6,7 +6,6 @@ import { LayoutAsideComponent } from '@elementar/components/layout';
 
 @Component({
   selector: 'app-layout-aside-example',
-  standalone: true,
   imports: [
     LayoutBodyComponent,
     LayoutComponent,

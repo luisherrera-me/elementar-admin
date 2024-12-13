@@ -1,11 +1,9 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { Location } from '@angular/common';
-import { MatRipple } from '@angular/material/core';
-import { EmrNavigationModule, NavigationItem } from '@elementar/components/navigation';
-import { OrderByPipe } from '@elementar/components/core';
+import { NavigationItem } from '@elementar/components/navigation';
 import { v7 as uuid } from 'uuid';
 import {
   SidebarBodyComponent,
@@ -13,20 +11,16 @@ import {
   SidebarComponent as EmrSidebarComponent,
   SidebarFooterComponent, SidebarFullViewModeDirective, SidebarHeaderComponent, SidebarNavComponent
 } from '@elementar/components/sidebar';
-import { AvatarComponent, DicebearComponent } from '@elementar/components/avatar';
+import { DicebearComponent } from '@elementar/components/avatar';
 import { MatIconButton } from '@angular/material/button';
 import { ToolbarComponent } from '@elementar/store/sidebar';
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   imports: [
     MatIcon,
     RouterLink,
-    EmrNavigationModule,
-    MatRipple,
     ToolbarComponent,
-    OrderByPipe,
     SidebarBodyComponent,
     SidebarCompactViewModeDirective,
     SidebarFullViewModeDirective,
@@ -34,7 +28,6 @@ import { ToolbarComponent } from '@elementar/store/sidebar';
     SidebarFooterComponent,
     SidebarHeaderComponent,
     SidebarNavComponent,
-    AvatarComponent,
     DicebearComponent,
     MatIconButton
   ],
@@ -51,8 +44,7 @@ export class SidebarComponent implements OnInit {
   height: string | null = '200px';
   compact = false;
 
-  @ViewChild('navigation', { static: true })
-  navigation!: any;
+  readonly navigation = viewChild.required<any>('navigation');
 
   navItems: NavigationItem[] = [
     {
@@ -528,12 +520,6 @@ export class SidebarComponent implements OnInit {
         {
           key: uuid(),
           type: 'link',
-          name: 'Sidebar Widgets',
-          link: '/pages/components/sidebar-widgets'
-        },
-        {
-          key: uuid(),
-          type: 'link',
           name: 'Confirm',
           link: '/pages/components/confirm'
         },
@@ -554,6 +540,12 @@ export class SidebarComponent implements OnInit {
           type: 'link',
           name: 'Comment Editor',
           link: '/pages/components/comment-editor'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Text Editor',
+          link: '/pages/components/text-editor'
         },
       ]
     },
@@ -604,8 +596,8 @@ export class SidebarComponent implements OnInit {
         {
           key: uuid(),
           type: 'link',
-          name: 'Sidebar',
-          link: '/pages/store/sidebar'
+          name: 'Sidebar Widgets',
+          link: '/pages/store/sidebar-widgets'
         },
         {
           key: uuid(),
@@ -619,6 +611,32 @@ export class SidebarComponent implements OnInit {
       key: 'headingPages',
       type: 'heading',
       name: 'Pages'
+    },
+    {
+      key: 'applications',
+      type: 'group',
+      icon: 'apps',
+      name: 'Applications',
+      children: [
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Messenger',
+          link: '/pages/applications/messenger'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'File Manager',
+          link: '/pages/applications/file-manager'
+        },
+        {
+          key: uuid(),
+          type: 'link',
+          name: 'Kanban Board',
+          link: '/pages/applications/kanban-board'
+        }
+      ]
     },
     {
       key: 'auth',
@@ -701,20 +719,6 @@ export class SidebarComponent implements OnInit {
           type: 'link',
           name: 'Notifications',
           link: '/pages/account/notifications'
-        }
-      ]
-    },
-    {
-      key: 'file-manager',
-      type: 'group',
-      icon: 'backup',
-      name: 'File Manager',
-      children: [
-        {
-          key: uuid(),
-          type: 'link',
-          name: 'Overview',
-          link: '/pages/file-manager'
         }
       ]
     },
@@ -817,9 +821,17 @@ export class SidebarComponent implements OnInit {
 
   private _activateLink() {
     const activeLink = this.navItemLinks.find(
-      navItem =>
-        navItem.link === this.location.path() ||
-        (this.location.path() !== '/' && this.location.path().includes(navItem.link as string))
+      navItem => {
+        if (navItem.link === this.location.path()) {
+          return true;
+        }
+
+        if (navItem.type === 'group') {
+          return (this.location.path() !== '/' && this.location.path().includes(navItem.link as string));
+        }
+
+        return false;
+      }
     );
 
     if (activeLink) {

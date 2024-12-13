@@ -6,42 +6,36 @@ import {
   Input,
   numberAttribute,
   OnInit,
-  QueryList,
-  ViewChildren
+  viewChildren
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  NG_VALUE_ACCESSOR,
-  Validators
-} from '@angular/forms';
+import { ControlValueAccessor, FormArray, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PinInputDirective } from '../pin-input.directive';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'emr-pin-input',
-  exportAs: 'emrPinInput',
-  templateUrl: './pin-input.component.html',
-  styleUrl: './pin-input.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => PinInputComponent),
-      multi: true
-    }
-  ],
-  host: {
-    'class': 'emr-pin-input',
-    '[class.is-disabled]': 'disabled',
-  }
+    selector: 'emr-pin-input',
+    exportAs: 'emrPinInput',
+    templateUrl: './pin-input.component.html',
+    styleUrl: './pin-input.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PinInputComponent),
+            multi: true
+        }
+    ],
+    host: {
+        'class': 'emr-pin-input',
+        '[class.is-disabled]': 'disabled',
+    },
+    imports: [ReactiveFormsModule, MatFormField, MatInput, PinInputDirective]
 })
 export class PinInputComponent implements ControlValueAccessor, OnInit {
   private _fb = inject(FormBuilder);
 
-  @ViewChildren(PinInputDirective)
-  readonly inputs: QueryList<PinInputDirective>;
+  readonly inputs = viewChildren(PinInputDirective);
 
   @Input({ transform: numberAttribute })
   length = 4;
@@ -126,11 +120,11 @@ export class PinInputComponent implements ControlValueAccessor, OnInit {
       const element = event.target as HTMLInputElement;
 
       if (event.key === 'Backspace' && !element.value) {
-        this.inputs.forEach((inputDirective, index) => {
+        this.inputs().forEach((inputDirective, index) => {
           const element = event.target as HTMLInputElement;
 
           if (inputDirective.api.nativeElement === element) {
-            const prevControl = this.inputs.get(index - 1);
+            const prevControl = this.inputs().at(index - 1);
 
             if (prevControl) {
               prevControl.api.focus();
@@ -165,13 +159,13 @@ export class PinInputComponent implements ControlValueAccessor, OnInit {
       return;
     }
 
-    this.inputs.forEach((inputDirective, index) => {
+    this.inputs().forEach((inputDirective, index) => {
       const element = event.target as HTMLInputElement;
 
       if (inputDirective.api.nativeElement === element) {
         const control = this.controls[index];
         control.setValue(event.key);
-        const nextControl = this.inputs.get(index + 1);
+        const nextControl = this.inputs().at(index + 1);
 
         if (nextControl) {
           nextControl.api.focus();

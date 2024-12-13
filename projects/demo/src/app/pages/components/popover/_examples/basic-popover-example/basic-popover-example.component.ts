@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { EmrPopoverModule } from '@elementar/components/popover';
+import { PopoverComponent, PopoverTriggerForDirective } from '@elementar/components/popover';
 
 @Component({
   selector: 'app-basic-popover-example',
-  standalone: true,
   imports: [
     MatButton,
-    EmrPopoverModule
+    PopoverTriggerForDirective,
+    PopoverComponent
   ],
   templateUrl: './basic-popover-example.component.html',
   styleUrl: './basic-popover-example.component.scss'

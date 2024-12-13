@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { EmrAnnouncementModule } from '@elementar/components/announcement';
+import { AnnouncementComponent } from '@elementar/components/announcement';
 
 @Component({
   selector: 'app-basic-announcement-example',
-  standalone: true,
   imports: [
-    EmrAnnouncementModule
+    AnnouncementComponent
   ],
   templateUrl: './basic-announcement-example.component.html',
   styleUrl: './basic-announcement-example.component.scss'

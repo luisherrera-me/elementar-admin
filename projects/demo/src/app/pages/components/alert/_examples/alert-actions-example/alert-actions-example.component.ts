@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { EmrAlertModule } from '@elementar/components/alert';
 import { MatIcon } from '@angular/material/icon';
+import {
+  AlertActionDirective,
+  AlertCloseDirective,
+  AlertComponent,
+  AlertTitleDirective
+} from '@elementar/components/alert';
 
 @Component({
   selector: 'app-alert-actions-example',
-  standalone: true,
   imports: [
-    EmrAlertModule,
-    MatIcon
+    MatIcon,
+    AlertActionDirective,
+    AlertCloseDirective,
+    AlertComponent,
+    AlertTitleDirective
   ],
   templateUrl: './alert-actions-example.component.html',
   styleUrl: './alert-actions-example.component.scss'

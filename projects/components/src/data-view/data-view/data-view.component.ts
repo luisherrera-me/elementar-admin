@@ -2,7 +2,7 @@ import {
   booleanAttribute,
   ChangeDetectorRef,
   Component,
-  computed, contentChild,
+  computed, contentChild, effect,
   inject, Injector,
   input,
   OnInit,
@@ -19,26 +19,25 @@ import {
 } from '@angular/material/table';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import {
+  DataView,
+  DataViewAPI,
   DataViewCellRenderer,
-  DataViewColumnDef,
+  DataViewColumnDef, DataViewRowModelType,
   DataViewRowSelectionEvent
 } from '../types';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader, Sort } from '@angular/material/sort';
-import { EmrSkeletonModule } from '../../skeleton';
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import { DataViewActionBarDirective } from '@elementar/components/data-view/data-view-action-bar.directive';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
+import { DataViewEmptyDataDirective, DataViewEmptyFilterResultsDirective } from '@elementar/components/data-view';
+import { SkeletonBlockComponent, SkeletonCircleComponent, SkeletonLineComponent } from '@elementar/components/skeleton';
 
 @Component({
   selector: 'emr-data-view',
   exportAs: 'emrDataView',
-  standalone: true,
   imports: [
     MatCell,
-    MatCellDef,
     MatCheckbox,
     MatColumnDef,
     MatHeaderCell,
@@ -50,11 +49,12 @@ import { MatIconButton } from '@angular/material/button';
     MatHeaderCellDef,
     MatSort,
     MatSortHeader,
-    EmrSkeletonModule,
     NgComponentOutlet,
     NgTemplateOutlet,
-    MatIcon,
-    MatIconButton
+    SkeletonBlockComponent,
+    MatCellDef,
+    SkeletonLineComponent,
+    SkeletonCircleComponent,
   ],
   templateUrl: './data-view.component.html',
   styleUrl: './data-view.component.scss',
@@ -62,9 +62,12 @@ import { MatIconButton } from '@angular/material/button';
     'class': 'emr-data-view',
     '[class.highlight-header]': 'highlightHeader()',
     '[class.hover-rows]': 'hoverRows()',
+    '[class.is-loading]': 'loading()',
   }
 })
-export class DataViewComponent<T> implements OnInit {
+export class DataViewComponent<T> implements OnInit, DataView {
+  protected _emptyDataRef = contentChild(DataViewEmptyDataDirective);
+  protected _emptyFilterResults = contentChild(DataViewEmptyFilterResultsDirective);
   private _cdr = inject(ChangeDetectorRef);
   private _matTable = viewChild<MatTable<T>>('table');
   private _matSort = viewChild<MatSort>(MatSort);
@@ -79,6 +82,7 @@ export class DataViewComponent<T> implements OnInit {
   highlightHeader = input(false, {
     transform: booleanAttribute
   });
+  rowModelType = input<DataViewRowModelType>('clientSide');
   withSorting = input(false, {
     transform: booleanAttribute
   });
@@ -108,9 +112,25 @@ export class DataViewComponent<T> implements OnInit {
       dataSource.paginator = this.paginator() as MatPaginator;
     }
 
-    if (this.withSorting()) {
+    if (this.withSorting() && this.rowModelType() === 'clientSide') {
       dataSource.sort = this._matSort() as MatSort;
     }
+
+    dataSource.sortingDataAccessor = (item: any, property) => {
+      const columnDef = this.columnDefs().find(colDef => colDef.dataField === property);
+
+      if (columnDef) {
+        if (columnDef.valueGetter) {
+          return columnDef.valueGetter(item[property]);
+        }
+      }
+
+      switch (property) {
+        default: {
+          return item[property];
+        }
+      }
+    };
 
     return dataSource;
   });
@@ -118,6 +138,7 @@ export class DataViewComponent<T> implements OnInit {
   loading = input(false, {
     transform: booleanAttribute
   });
+  search = input<string>('');
 
   protected injector = inject(Injector);
   protected selection = new SelectionModel<T>(true, []);
@@ -127,10 +148,53 @@ export class DataViewComponent<T> implements OnInit {
   readonly rowSelectionChanged = output<DataViewRowSelectionEvent<T>>();
   readonly selectionChanged = output<T[]>();
   readonly allRowsSelectionChanged = output<boolean>();
-  readonly sortChanged = output<Sort>();
+  readonly sortChange = output<Sort>();
+
+  get api(): DataViewAPI {
+    return {
+      search: (value: string): void => {
+        this.dataSource().filter = value.trim().toLowerCase();
+      },
+      selectAll: (): void => {
+        this._selectAll();
+      },
+      unselectAll: (): void => {
+        this._unselectAll();
+      }
+    }
+  }
+
+  get noFilteredResults(): boolean {
+    return !!(this._emptyDataRef() || this._emptyFilterResults()) &&
+      ((this.dataSource().filteredData.length === 0 && this.rowModelType() === 'clientSide') ||
+        (this.dataSource().data.length === 0 && this.rowModelType() === 'serverSide'))
+    ;
+  }
 
   get actionBarTemplateRef(): TemplateRef<any> | undefined {
     return this._actionBarRef()?.templateRef;
+  }
+
+  protected get emptyTemplateRef(): TemplateRef<any> {
+    return this._emptyDataRef()?.templateRef as TemplateRef<any>;
+  }
+
+  protected get emptyFilterResultsTemplateRef(): TemplateRef<any> {
+    return this._emptyFilterResults()?.templateRef as TemplateRef<any>;
+  }
+
+  protected get hasFilterValue(): boolean {
+    return !!this.search().trim();
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.rowModelType() === 'clientSide') {
+        this.dataSource().filter = this.search().trim().toLowerCase();
+      }
+    }, {
+      allowSignalWrites: true
+    });
   }
 
   ngOnInit() {
@@ -165,25 +229,16 @@ export class DataViewComponent<T> implements OnInit {
     return this.cellRenderersMap.get(dataRenderer);
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.data().length;
-    return numSelected === numRows;
+    return this.selection.selected.length === this.data().length;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows(): void {
     if (this.isAllSelected()) {
-      this.selection.clear();
-      this.selectionChanged.emit([]);
-      this.allRowsSelectionChanged.emit(false);
-      return;
+      this._unselectAll();
+    } else {
+      this._selectAll();
     }
-
-    this.selection.select(...this.data());
-    this.selectionChanged.emit(this.data());
-    this.allRowsSelectionChanged.emit(true);
   }
 
   rowSelectionToggle(event: MatCheckboxChange, row: T): void {
@@ -201,7 +256,19 @@ export class DataViewComponent<T> implements OnInit {
     this.selectionChanged.emit(this.selection.selected);
   }
 
-  protected sortChange(event: Sort) {
-    this.sortChanged.emit(event);
+  protected onSortChange(event: Sort): void {
+    this.sortChange.emit(event);
+  }
+
+  private _selectAll(): void {
+    this.selection.select(...this.data());
+    this.selectionChanged.emit(this.data());
+    this.allRowsSelectionChanged.emit(true);
+  }
+
+  private _unselectAll(): void {
+    this.selection.clear();
+    this.selectionChanged.emit([]);
+    this.allRowsSelectionChanged.emit(false);
   }
 }

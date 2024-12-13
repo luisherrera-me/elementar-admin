@@ -4,17 +4,29 @@ import { FormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
-import { EmrPanelModule } from '@elementar/components/panel';
 import {
-  DataViewActionBarComponent, DataViewActionBarDirective,
+  DataView,
+  DataViewActionBarComponent, DataViewActionBarDirective, DataViewAPI,
   DataViewCellRenderer,
   DataViewColumnDef,
-  DataViewComponent,
+  DataViewComponent, DataViewEmptyDataDirective, DataViewEmptyFilterResultsDirective,
   DataViewRowSelectionEvent
 } from '@elementar/components/data-view';
 import { VDividerComponent } from '@elementar/components/divider';
 import { SegmentedButtonComponent, SegmentedComponent } from '@elementar/components/segmented';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import {
+  BlockStateActionsComponent,
+  BlockStateComponent,
+  BlockStateContentComponent, BlockStateIconComponent,
+  BlockStateImageComponent
+} from '@elementar/components/block-state';
+import {
+  PanelBodyComponent,
+  PanelComponent,
+  PanelFooterComponent,
+  PanelHeaderComponent
+} from '@elementar/components/panel';
 
 export interface User {
   id: string;
@@ -34,9 +46,7 @@ export interface Post {
 }
 
 @Component({
-  standalone: true,
   imports: [
-    EmrPanelModule,
     DataViewComponent,
     MatPaginator,
     FormsModule,
@@ -50,7 +60,16 @@ export interface Post {
     DataViewActionBarDirective,
     MatMenu,
     MatMenuItem,
-    MatMenuTrigger
+    MatMenuTrigger,
+    BlockStateComponent,
+    DataViewEmptyDataDirective,
+    BlockStateContentComponent,
+    DataViewEmptyFilterResultsDirective,
+    BlockStateIconComponent,
+    PanelHeaderComponent,
+    PanelComponent,
+    PanelFooterComponent,
+    PanelBodyComponent,
   ],
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.scss'
@@ -101,6 +120,7 @@ export class PostListComponent implements OnInit {
       component: () => import('../_renderers/dv-date-renderer/dv-date-renderer.component').then(c => c.DvDateRendererComponent)
     }
   ];
+  search = '';
 
   ngOnInit() {
     this._httpClient

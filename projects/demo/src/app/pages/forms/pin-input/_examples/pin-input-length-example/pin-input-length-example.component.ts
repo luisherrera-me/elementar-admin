@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { EmrPinInputModule } from '@elementar/components/pin-input';
+import { PinInputComponent } from '@elementar/components/pin-input';
 
 @Component({
   selector: 'app-pin-input-length-example',
-  standalone: true,
   imports: [
-    EmrPinInputModule
+    PinInputComponent
   ],
   templateUrl: './pin-input-length-example.component.html',
   styleUrl: './pin-input-length-example.component.scss'

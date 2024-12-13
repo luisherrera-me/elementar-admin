@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
-  MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle
@@ -13,12 +11,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dialog-with-confirmation',
-  standalone: true,
-  imports:[
+  imports: [
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatButton,
   ],
   templateUrl: './dialog-with-confirmation.component.html',

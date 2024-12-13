@@ -4,11 +4,12 @@ import {
   forwardRef,
   input, OnInit
 } from '@angular/core';
-import { AVATAR_ACCESSOR } from '../avatar.properties';
+import { AVATAR_ACCESSOR } from '../types';
 import { createAvatar } from '@dicebear/core';
 import { identicon, initials } from '@dicebear/collection';
 import { SafeHtmlPipe } from '@elementar/components/core';
 import { v7 as uuid } from 'uuid';
+import { AvatarPresenceIndicator } from '@elementar/components/avatar';
 
 export interface Preset {
   style: any,
@@ -38,26 +39,25 @@ const presets: {[prop: string]: Preset} = {
 };
 
 @Component({
-  selector: 'emr-dicebear,[emr-dicebear]',
-  exportAs: 'emrDicebear',
-  templateUrl: './dicebear.component.html',
-  styleUrls: ['./dicebear.component.scss'],
-  providers: [
-    {
-      provide: AVATAR_ACCESSOR,
-      useExisting: forwardRef(() => DicebearComponent),
-      multi: true
+    selector: 'emr-dicebear,[emr-dicebear]',
+    exportAs: 'emrDicebear',
+    templateUrl: './dicebear.component.html',
+    styleUrls: ['./dicebear.component.scss'],
+    providers: [
+        {
+            provide: AVATAR_ACCESSOR,
+            useExisting: forwardRef(() => DicebearComponent),
+            multi: true
+        }
+    ],
+    imports: [
+        SafeHtmlPipe
+    ],
+    host: {
+        'class': 'emr-avatar emr-dicebear',
+        '[class.is-clickable]': 'clickable()',
+        '[class.has-loaded-image]': 'src() && imageLoaded',
     }
-  ],
-  standalone: true,
-  imports: [
-    SafeHtmlPipe
-  ],
-  host: {
-    'class': 'emr-avatar emr-dicebear',
-    '[class.is-clickable]': 'clickable()',
-    '[class.has-loaded-image]': 'src() && imageLoaded',
-  }
 })
 export class DicebearComponent implements OnInit {
   src = input<string>();
@@ -67,7 +67,7 @@ export class DicebearComponent implements OnInit {
   key = input<any>();
   preset = input<string>('identicon');
   alt = input<string>();
-  presenceIndicator = input<'online' | 'offline' | null>(null);
+  presenceIndicator = input<AvatarPresenceIndicator>(null);
 
   protected imageLoaded: boolean;
   protected svg = '';

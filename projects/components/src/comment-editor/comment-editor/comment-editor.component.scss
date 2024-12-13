@@ -1,5 +1,8 @@
 :host {
-  @apply relative block overflow-hidden bg-neutral-50;
+  --emr-comment-editor-bg: transparent;
+  --emr-comment-editor-content-max-height: 9999px;
+
+  @apply relative block overflow-hidden bg-[var(--emr-comment-editor-bg)];
 
   .floating-menu {
     @apply shadow bg-white py-1.5 px-2 border rounded-full;
@@ -76,7 +79,7 @@
 
   &.full-view {
     .content {
-      @apply static h-auto min-h-12;
+      @apply static h-auto min-h-12 max-h-[var(--emr-comment-editor-content-max-height)] overflow-y-auto;
     }
   }
 
@@ -96,8 +99,4 @@
       @apply bg-neutral-200 dark:bg-neutral-650 dark:text-neutral-200;
     }
   }
-}
-
-:host-context(html.dark) {
-  @apply bg-neutral-800;
 }

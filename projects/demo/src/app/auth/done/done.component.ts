@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { EmrPinInputModule } from '@elementar/components/pin-input';
 import { FormsModule } from '@angular/forms';
 import { MatAnchor, MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -7,9 +6,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-done',
-  standalone: true,
   imports: [
-    EmrPinInputModule,
     FormsModule,
     MatButton,
     MatIcon,

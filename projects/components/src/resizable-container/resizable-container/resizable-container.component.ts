@@ -10,20 +10,20 @@ import {
   numberAttribute,
   OnInit,
   Renderer2,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { fromEvent, throttleTime } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'emr-resizable-container',
-  exportAs: 'emrResizableContainer',
-  templateUrl: './resizable-container.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    'class': 'emr-resizable-container'
-  }
+    selector: 'emr-resizable-container',
+    exportAs: 'emrResizableContainer',
+    templateUrl: './resizable-container.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        'class': 'emr-resizable-container'
+    }
 })
 export class ResizableContainerComponent implements OnInit {
   private _renderer = inject(Renderer2);
@@ -36,13 +36,13 @@ export class ResizableContainerComponent implements OnInit {
   private _maxWidth: number;
   private _clientX: number;
 
-  @ViewChild('handler', { static: true }) handlerRef: ElementRef;
+  readonly handlerRef = viewChild.required<ElementRef>('handler');
 
   @Input({ transform: numberAttribute }) minWidth = 0;
 
   ngOnInit() {
     this._ngZone.runOutsideAngular(() => {
-      fromEvent<MouseEvent>(this.handlerRef.nativeElement, 'mousedown')
+      fromEvent<MouseEvent>(this.handlerRef().nativeElement, 'mousedown')
         .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe((event: MouseEvent) => {
           this._resizing = true;

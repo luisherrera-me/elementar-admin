@@ -1,4 +1,4 @@
-import { ContentChild, Directive, Input } from '@angular/core';
+import { Directive, Input, contentChild } from '@angular/core';
 import { FilterBuilderOperationNameDirective } from './filter-builder-operation-name.directive';
 import { FilterBuilderOperationIconDirective } from './filter-builder-operation-icon.directive';
 
@@ -12,9 +12,6 @@ export class FilterBuilderOperationDefDirective {
   @Input()
   allowedDataTypes: string[] = [];
 
-  @ContentChild(FilterBuilderOperationNameDirective)
-  readonly operationName: FilterBuilderOperationNameDirective;
-
-  @ContentChild(FilterBuilderOperationIconDirective)
-  readonly operationIcon: FilterBuilderOperationIconDirective;
+  readonly operationName = contentChild(FilterBuilderOperationNameDirective);
+  readonly operationIcon = contentChild(FilterBuilderOperationIconDirective);
 }

@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import {
-  BasicDividerExampleComponent
-} from '../../../components/divider/_examples/basic-divider-example/basic-divider-example.component';
-import { MatDivider } from '@angular/material/divider';
 import { PlaygroundComponent } from '@demo/meta/playground/playground.component';
 import { PrimaryColorsExampleComponent } from '../_examples/primary-colors-example/primary-colors-example.component';
 import {
@@ -23,10 +19,7 @@ import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [
-    BasicDividerExampleComponent,
-    MatDivider,
     PlaygroundComponent,
     PrimaryColorsExampleComponent,
     SecondaryColorsExampleComponent,

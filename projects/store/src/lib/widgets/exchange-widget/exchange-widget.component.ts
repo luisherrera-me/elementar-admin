@@ -1,27 +1,30 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
 import { MatRipple } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Dashboard, DASHBOARD, Widget } from '@elementar/components/dashboard';
 
 @Component({
-  selector: 'emr-exchange-widget',
-  standalone: true,
-  imports: [
-    MatIcon,
-    MatDivider,
-    MatRipple,
-    MatButton,
-    ReactiveFormsModule
-  ],
-  templateUrl: './exchange-widget.component.html',
-  styleUrl: './exchange-widget.component.scss'
+    selector: 'emr-exchange-widget',
+    imports: [
+        MatIcon,
+        MatDivider,
+        MatRipple,
+        MatButton,
+        ReactiveFormsModule
+    ],
+    templateUrl: './exchange-widget.component.html',
+    styleUrl: './exchange-widget.component.scss'
 })
 export class ExchangeWidgetComponent implements OnInit {
   private _fb = inject(FormBuilder);
   private _destroyRef = inject(DestroyRef);
+  private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
+
+  widget = input<Widget>();
 
   conversionFromRate: number = 1.3275;
   conversionToRate: number = 0.7532;
@@ -35,6 +38,10 @@ export class ExchangeWidgetComponent implements OnInit {
   });
 
   ngOnInit() {
+    if (this._dashboard && this.widget()) {
+      this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+    }
+
     this.form.get('from')
       ?.valueChanges
       .pipe(

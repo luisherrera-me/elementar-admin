@@ -1,11 +1,22 @@
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
+export interface DataView {
+  api: DataViewAPI;
+}
+
+export interface DataViewAPI {
+  search(value: string): void;
+  selectAll(): void;
+  unselectAll(): void;
+}
+
 export interface DataViewColumnDef {
   name: string;
   dataField: string;
   dataRenderer?: string;
   visible: boolean;
   width?: string;
+  valueGetter?: (value: any) => any;
 }
 
 export interface DataViewRowSelectionEvent<T> {
@@ -28,3 +39,5 @@ export interface DataViewCellRendererComponent {
 export interface DataViewActionBarAPI {
   setForceVisible: (visible: boolean) => void;
 }
+
+export type DataViewRowModelType = 'clientSide' | 'serverSide';

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { EmrAlertModule } from '@elementar/components/alert';
+import { AlertComponent, AlertTitleDirective } from '@elementar/components/alert';
 
 @Component({
   selector: 'app-alert-with-title-example',
-  standalone: true,
   imports: [
-    EmrAlertModule
+    AlertTitleDirective,
+    AlertComponent
   ],
   templateUrl: './alert-with-title-example.component.html',
   styleUrl: './alert-with-title-example.component.scss'

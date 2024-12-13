@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { EmrExpandModule } from '@elementar/components/expand';
+import { ExpandComponent } from '@elementar/components/expand';
 
 @Component({
   selector: 'app-basic-expand-example',
-  standalone: true,
   imports: [
-    EmrExpandModule
+    ExpandComponent
   ],
   templateUrl: './basic-expand-example.component.html',
   styleUrl: './basic-expand-example.component.scss'

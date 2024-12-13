@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { MarqueeComponent, MarqueeItemDirective } from '@elementar/components/marquee';
+import { MarqueeComponent } from '@elementar/components/marquee';
 
 @Component({
   selector: 'app-marquee-reverse-example',
-  standalone: true,
   imports: [
-    MarqueeComponent,
-    MarqueeItemDirective
+    MarqueeComponent
   ],
   templateUrl: './marquee-reverse-example.component.html',
   styleUrl: './marquee-reverse-example.component.scss'

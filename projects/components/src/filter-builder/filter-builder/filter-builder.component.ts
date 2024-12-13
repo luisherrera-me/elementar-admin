@@ -1,17 +1,16 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectorRef,
   Component,
-  ContentChildren,
   inject,
   Input,
   OnInit,
   output,
   PLATFORM_ID,
-  QueryList,
-  ViewChildren
+  viewChildren,
+  contentChildren, TemplateRef
 } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { isPlatformServer, NgTemplateOutlet } from '@angular/common';
 import { FilterBuilderOperationDefDirective } from '../filter-builder-operation-def.directive';
 import {
   FilterBuilderCondition,
@@ -20,16 +19,42 @@ import {
   FilterBuilderGroup,
   FilterBuilderItemType
 } from '../types';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MenuOptionGroupDirective } from '../../core/directives/menu-option-group.directive';
+import { FormsModule } from '@angular/forms';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatFormField, MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { AutoFocusDirective } from '../../core/directives/auto-focus.directive';
+import { FocusElementDirective } from '../../core/directives/focus-element.directive';
+import { FilterBuilderOperationNameDirective } from '../filter-builder-operation-name.directive';
 
 @Component({
   selector: 'emr-filter-builder',
   exportAs: 'emrFilterBuilder',
+  imports: [
+    MatIcon,
+    MatMenuTrigger,
+    MatMenu,
+    MenuOptionGroupDirective,
+    FormsModule,
+    MatOption,
+    MatMenuItem,
+    NgTemplateOutlet,
+    MatFormField,
+    MatSelect,
+    AutoFocusDirective,
+    FocusElementDirective,
+    MatInput,
+    FilterBuilderOperationDefDirective,
+    FilterBuilderOperationNameDirective
+  ],
   templateUrl: './filter-builder.component.html',
   styleUrl: './filter-builder.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'emr-filter-builder'
-  }
+  },
 })
 export class FilterBuilderComponent implements OnInit, AfterViewInit {
   protected _cdr = inject(ChangeDetectorRef);
@@ -37,10 +62,10 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
   protected _isServer = isPlatformServer(this._platformId);
   protected _operationAllowedTypesMap: Map<string, string[]> = new Map();
   private _resetMethodMap: { [prop: string]: (condition: FilterBuilderCondition) => void } = {
-      '_resetStringValue': this._resetStringValue,
-      '_resetBooleanValue': this._resetBooleanValue,
-      '_resetArrayValue': this._resetArrayValue,
-      '_resetNumberValue': this._resetNumberValue,
+    '_resetStringValue': this._resetStringValue,
+    '_resetBooleanValue': this._resetBooleanValue,
+    '_resetArrayValue': this._resetArrayValue,
+    '_resetNumberValue': this._resetNumberValue,
   };
 
   @Input()
@@ -65,11 +90,9 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
   ];
   protected _logicalOperator = this.groupOperations[0].id;
 
-  @ViewChildren(FilterBuilderOperationDefDirective)
-  protected _prebuiltOperationDefs: QueryList<FilterBuilderOperationDefDirective>;
+  readonly _prebuiltOperationDefs = viewChildren(FilterBuilderOperationDefDirective);
 
-  @ContentChildren(FilterBuilderOperationDefDirective)
-  protected _customOperationDefs: QueryList<FilterBuilderOperationDefDirective>;
+  readonly _customOperationDefs = contentChildren(FilterBuilderOperationDefDirective);
 
   protected _operationDefs: FilterBuilderOperationDefDirective[] = [];
 
@@ -94,11 +117,11 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this._operationDefs = [...this._prebuiltOperationDefs, ...this._customOperationDefs];
+    this._operationDefs = [...this._prebuiltOperationDefs(), ...this._customOperationDefs()];
     this._operationDefs.forEach(operationDef => {
       this._operations.push({
         id: operationDef.id,
-        name: operationDef.operationName.templateRef
+        name: operationDef.operationName()?.templateRef
       });
       operationDef.allowedDataTypes.forEach((allowedType: string) => {
         if (!this._operationAllowedTypesMap.has(allowedType)) {
@@ -262,6 +285,14 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
     this._emitChangeEvent();
   }
 
+  protected operationIconTemplateRef(operation: FilterBuilderOperationDefDirective): TemplateRef<any> {
+    return operation.operationIcon()?.templateRef as TemplateRef<any>;
+  }
+
+  protected operationNameTemplateRef(operation: FilterBuilderOperationDefDirective): TemplateRef<any> {
+    return operation.operationName()?.templateRef as TemplateRef<any>;
+  }
+
   protected _isGroup(item: FilterBuilderItemType): item is FilterBuilderGroup {
     return 'logicalOperator' in item;
   }
@@ -341,7 +372,6 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
         }
       }
     });
-
     return result;
   }
 }

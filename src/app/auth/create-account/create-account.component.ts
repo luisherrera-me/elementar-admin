@@ -1,16 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
-import { PasswordStrengthModule } from '@elementar/components/password-strength';
-import { EmrPhoneInputModule, phoneValidator } from '@elementar/components/phone-input';
+
+import { phoneValidator } from '@elementar/components/phone-input';
 import { HDividerComponent } from '@elementar/components/divider';
+import { PasswordStrengthComponent } from '../../../../projects/components/src/password-strength/password-strength/password-strength.component';
+import { PhoneInputComponent } from '../../../../projects/components/src/phone-input/phone-input/phone-input.component';
 
 @Component({
   selector: 'app-create-account',
-  standalone: true,
   imports: [
     FormsModule,
     MatButton,
@@ -19,11 +20,10 @@ import { HDividerComponent } from '@elementar/components/divider';
     MatLabel,
     ReactiveFormsModule,
     RouterLink,
-    PasswordStrengthModule,
-    EmrPhoneInputModule,
-    MatError,
+    PasswordStrengthComponent,
+    PhoneInputComponent,
     HDividerComponent
-  ],
+],
   templateUrl: './create-account.component.html',
   styleUrl: './create-account.component.scss'
 })

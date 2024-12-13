@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { Dashboard, DASHBOARD, Widget } from '@elementar/components/dashboard';
 
 @Component({
-  selector: 'emr-site-visitors-widget',
-  standalone: true,
-  imports: [
-    MatIcon
-  ],
-  templateUrl: './site-visitors-widget.component.html',
-  styleUrl: './site-visitors-widget.component.scss'
+    selector: 'emr-site-visitors-widget',
+    imports: [
+        MatIcon
+    ],
+    templateUrl: './site-visitors-widget.component.html',
+    styleUrl: './site-visitors-widget.component.scss'
 })
-export class SiteVisitorsWidgetComponent {
+export class SiteVisitorsWidgetComponent implements OnInit {
+  private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
 
+  widget = input<Widget>();
+
+  ngOnInit() {
+    if (this._dashboard && this.widget()) {
+      this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+    }
+  }
 }

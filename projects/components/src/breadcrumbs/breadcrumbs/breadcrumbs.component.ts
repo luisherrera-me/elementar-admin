@@ -2,16 +2,18 @@ import { Component, TemplateRef, input, booleanAttribute, contentChild } from '@
 import { BreadcrumbItemDefDirective } from '../breadcrumb-item-def.directive';
 import { BreadcrumbSeparatorDefDirective } from '../breadcrumb-separator-def.directive';
 import { BreadcrumbActiveItemDefDirective } from '../breadcrumb-active-item-def.directive';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
-  selector: 'emr-breadcrumbs',
-  exportAs: 'emrBreadcrumbs',
-  templateUrl: './breadcrumbs.component.html',
-  styleUrls: ['./breadcrumbs.component.scss'],
-  host: {
-    'class': 'emr-breadcrumbs',
-    '[class.last-item-as-link]': 'lastItemAsLink()'
-  }
+    selector: 'emr-breadcrumbs',
+    exportAs: 'emrBreadcrumbs',
+    templateUrl: './breadcrumbs.component.html',
+    styleUrls: ['./breadcrumbs.component.scss'],
+    host: {
+        'class': 'emr-breadcrumbs',
+        '[class.last-item-as-link]': 'lastItemAsLink()'
+    },
+    imports: [NgTemplateOutlet]
 })
 export class BreadcrumbsComponent {
   itemRef = contentChild.required(BreadcrumbItemDefDirective, {

@@ -4,37 +4,18 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { IconComponent } from '@elementar/components/icon';
 import { MatRipple } from '@angular/material/core';
-import { RouterLink } from '@angular/router';
 import {
-  AvgClickRateWidgetComponent,
-  AvgOpenRateWidgetComponent,
-  EventsWidgetComponent,
-  TasksInProgressWidgetComponent,
-  TeamWidgetComponent,
-  TodosWidgetComponent, TotalProjectsWidgetComponent,
-  TotalSubscribersWidgetComponent, TotalTasksWidgetComponent, Transaction,
-  TransactionsWidgetComponent, UniqueVisitorsWidgetComponent
+  Transaction,
+  TransactionsWidgetComponent
 } from '@elementar/store/widgets';
 
 @Component({
-  standalone: true,
   imports: [
     DecimalPipe,
     MatButton,
     MatIcon,
     IconComponent,
     MatRipple,
-    RouterLink,
-    AvgClickRateWidgetComponent,
-    AvgOpenRateWidgetComponent,
-    EventsWidgetComponent,
-    TasksInProgressWidgetComponent,
-    TeamWidgetComponent,
-    TodosWidgetComponent,
-    TotalProjectsWidgetComponent,
-    TotalSubscribersWidgetComponent,
-    TotalTasksWidgetComponent,
-    UniqueVisitorsWidgetComponent,
     TransactionsWidgetComponent
   ],
   templateUrl: './finance.component.html',

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import {
   MatAutocomplete,
   MatAutocompleteSelectedEvent,
@@ -16,7 +16,6 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-chips-autocomplete-example',
-  standalone: true,
   imports: [
     MatAutocomplete,
     MatOption,
@@ -41,8 +40,7 @@ export class ChipsAutocompleteExampleComponent {
   fruits: string[] = ['Lemon'];
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
-  @ViewChild('fruitInput')
-  fruitInput: ElementRef<HTMLInputElement>;
+  readonly fruitInput = viewChild.required<ElementRef<HTMLInputElement>>('fruitInput');
 
   announcer = inject(LiveAnnouncer);
 
@@ -63,7 +61,6 @@ export class ChipsAutocompleteExampleComponent {
 
     // Clear the input value
     event.chipInput!.clear();
-
     this.fruitCtrl.setValue(null);
   }
 
@@ -78,13 +75,12 @@ export class ChipsAutocompleteExampleComponent {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
+    this.fruitInput().nativeElement.value = '';
     this.fruitCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
   }
 }

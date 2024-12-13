@@ -6,7 +6,6 @@ import { LayoutHeaderComponent } from '@elementar/components/layout';
 
 @Component({
   selector: 'app-layout-header-with-footer-example',
-  standalone: true,
   imports: [
     LayoutBodyComponent,
     LayoutComponent,

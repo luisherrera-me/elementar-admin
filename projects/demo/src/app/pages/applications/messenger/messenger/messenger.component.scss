@@ -1,0 +1,11 @@
+:host {
+  @apply grid h-full py-5 px-10 gap-2 grid-cols-[312px_1fr];
+
+  &:has(.sidebar) {
+    @apply grid-cols-[312px_1fr_312px];
+  }
+
+  emr-comment-editor {
+    --emr-comment-editor-content-max-height: 160px;
+  }
+}

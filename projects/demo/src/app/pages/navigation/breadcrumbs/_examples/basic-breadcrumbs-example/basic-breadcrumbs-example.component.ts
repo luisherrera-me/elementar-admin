@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { EmrBreadcrumbsModule } from '@elementar/components/breadcrumbs';
+import {
+  BreadcrumbItemComponent,
+  BreadcrumbsComponent,
+  BreadcrumbSeparatorComponent
+} from '@elementar/components/breadcrumbs';
 
 @Component({
   selector: 'app-basic-breadcrumbs-example',
-  standalone: true,
   imports: [
-    EmrBreadcrumbsModule
+    BreadcrumbSeparatorComponent,
+    BreadcrumbItemComponent,
+    BreadcrumbsComponent
   ],
   templateUrl: './basic-breadcrumbs-example.component.html',
   styleUrl: './basic-breadcrumbs-example.component.scss'

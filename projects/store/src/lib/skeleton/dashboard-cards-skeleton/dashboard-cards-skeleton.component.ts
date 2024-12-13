@@ -1,11 +1,12 @@
 import { Component, input, numberAttribute } from '@angular/core';
-import { EmrSkeletonModule } from '@elementar/components/skeleton';
+import { SkeletonBlockComponent, SkeletonComponent, SkeletonLineComponent } from '@elementar/components/skeleton';
 
 @Component({
   selector: 'emr-dashboard-cards-skeleton',
-  standalone: true,
   imports: [
-    EmrSkeletonModule
+    SkeletonBlockComponent,
+    SkeletonLineComponent,
+    SkeletonComponent
   ],
   templateUrl: './dashboard-cards-skeleton.component.html',
   styleUrl: './dashboard-cards-skeleton.component.css'

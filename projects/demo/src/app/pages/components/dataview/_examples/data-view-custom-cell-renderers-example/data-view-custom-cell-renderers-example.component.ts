@@ -14,13 +14,12 @@ export interface User {
 }
 
 @Component({
-  selector: 'app-data-view-custom-cell-renderers-example',
-  standalone: true,
-  imports: [
-    DataViewComponent
-  ],
-  templateUrl: './data-view-custom-cell-renderers-example.component.html',
-  styleUrl: './data-view-custom-cell-renderers-example.component.scss'
+    selector: 'app-data-view-custom-cell-renderers-example',
+    imports: [
+        DataViewComponent
+    ],
+    templateUrl: './data-view-custom-cell-renderers-example.component.html',
+    styleUrl: './data-view-custom-cell-renderers-example.component.scss'
 })
 export class DataViewCustomCellRenderersExampleComponent implements OnInit {
   private _httpClient = inject(HttpClient);
@@ -36,7 +35,10 @@ export class DataViewCustomCellRenderersExampleComponent implements OnInit {
       dataField: 'id',
       dataRenderer: 'user',
       visible: true,
-      width: '300px'
+      width: '300px',
+      valueGetter: value => {
+        return value.name;
+      }
     },
     {
       name: 'Enabled',

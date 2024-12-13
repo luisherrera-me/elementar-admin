@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatAccordion,
@@ -14,7 +14,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-expansion-panel-expand-collapse-toggles-example',
-  standalone: true,
   imports: [
     MatButton,
     MatExpansionPanel,
@@ -31,10 +30,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   templateUrl: './expansion-panel-expand-collapse-toggles-example.component.html',
   styleUrl: './expansion-panel-expand-collapse-toggles-example.component.scss',
   providers: [
-    provideNativeDateAdapter()
+      provideNativeDateAdapter()
   ]
 })
 export class ExpansionPanelExpandCollapseTogglesExampleComponent {
-  @ViewChild(MatAccordion)
-  accordion: MatAccordion;
+  readonly accordion = viewChild.required(MatAccordion);
 }

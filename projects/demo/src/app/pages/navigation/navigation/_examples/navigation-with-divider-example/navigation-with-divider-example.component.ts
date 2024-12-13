@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { EmrNavigationModule } from '@elementar/components/navigation';
+import {
+  NavigationComponent,
+  NavigationDividerComponent,
+  NavigationItemComponent
+} from '@elementar/components/navigation';
 
 @Component({
   selector: 'app-navigation-with-divider-example',
-  standalone: true,
   imports: [
-    EmrNavigationModule
+    NavigationDividerComponent,
+    NavigationItemComponent,
+    NavigationComponent
   ],
   templateUrl: './navigation-with-divider-example.component.html',
   styleUrl: './navigation-with-divider-example.component.scss'

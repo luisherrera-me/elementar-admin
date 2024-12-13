@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
-import { EmrColorPickerModule } from '@elementar/components/color-picker';
-import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import {
+  ColorPickerComponent,
+  ColorPickerThumbnailComponent,
+  ColorPickerTriggerForDirective
+} from '@elementar/components/color-picker';
 
 @Component({
   selector: 'app-input-with-color-picker-example',
-  standalone: true,
   imports: [
-    EmrColorPickerModule,
     MatFormField,
-    MatIcon,
-    MatIconButton,
     MatInput,
     MatLabel,
-    MatPrefix,
     MatSuffix,
-    FormsModule
+    FormsModule,
+    ColorPickerTriggerForDirective,
+    ColorPickerThumbnailComponent,
+    ColorPickerComponent
   ],
   templateUrl: './input-with-color-picker-example.component.html',
   styleUrl: './input-with-color-picker-example.component.scss'

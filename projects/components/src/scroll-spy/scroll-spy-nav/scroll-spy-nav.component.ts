@@ -3,11 +3,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ContentChildren, DestroyRef,
+  DestroyRef,
   inject,
   NgZone,
   PLATFORM_ID,
-  QueryList
+  contentChildren
 } from '@angular/core';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
 import { debounceTime, fromEvent } from 'rxjs';
@@ -16,20 +16,20 @@ import { SCROLL_SPY_NAV } from '../types';
 import { ScrollSpyOnComponent } from '../scroll-spy-on/scroll-spy-on.component';
 
 @Component({
-  selector: 'emr-scroll-spy-nav,[emr-scroll-spy-nav]',
-  exportAs: 'emrScrollSpyNav',
-  templateUrl: './scroll-spy-nav.component.html',
-  styleUrl: './scroll-spy-nav.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: SCROLL_SPY_NAV,
-      useExisting: ScrollSpyNavComponent
+    selector: 'emr-scroll-spy-nav,[emr-scroll-spy-nav]',
+    exportAs: 'emrScrollSpyNav',
+    templateUrl: './scroll-spy-nav.component.html',
+    styleUrl: './scroll-spy-nav.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: SCROLL_SPY_NAV,
+            useExisting: ScrollSpyNavComponent
+        }
+    ],
+    host: {
+        'class': 'emr-scroll-spy-nav'
     }
-  ],
-  host: {
-    'class': 'emr-scroll-spy-nav'
-  }
 })
 export class ScrollSpyNavComponent implements AfterContentInit {
   private _document = inject(DOCUMENT);
@@ -39,8 +39,7 @@ export class ScrollSpyNavComponent implements AfterContentInit {
   private _threshold = 10;
   private _destroyRef = inject(DestroyRef);
 
-  @ContentChildren(ScrollSpyOnComponent)
-  private _items: QueryList<any>;
+  readonly _items = contentChildren(ScrollSpyOnComponent);
 
   activeId: string;
 
@@ -91,7 +90,7 @@ export class ScrollSpyNavComponent implements AfterContentInit {
   }
 
   private _findActiveItem() {
-    for (let item of this._items) {
+    for (let item of this._items()) {
       const targetElement = this._document.querySelector('#' + item.targetId) as HTMLElement;
 
       if (targetElement) {

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BasicBadgesExampleComponent } from '../../badge/_examples/basic-badges-example/basic-badges-example.component';
 import { PlaygroundComponent } from '@demo/meta/playground/playground.component';
 import { BasicCarouselExampleComponent } from '../_examples/basic-carousel-example/basic-carousel-example.component';
 import {
@@ -13,9 +12,7 @@ import {
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [
-    BasicBadgesExampleComponent,
     PlaygroundComponent,
     BasicCarouselExampleComponent,
     CarouselControlsCustomPositionExampleComponent,

@@ -1,7 +1,4 @@
-import { afterNextRender, Component, ElementRef, inject, OnDestroy, ViewChild } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { MatRipple } from '@angular/material/core';
-import { MatTooltip } from '@angular/material/tooltip';
+import { afterNextRender, Component, ElementRef, inject, input, OnDestroy, viewChild } from '@angular/core';
 import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import {
@@ -14,14 +11,11 @@ import {
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import { ThemeManagerService } from '@elementar/components/core';
+import { Dashboard, DASHBOARD, Widget } from '@elementar/components/dashboard';
 
 @Component({
   selector: 'emr-purchases-by-channels-widget',
-  standalone: true,
   imports: [
-    MatIcon,
-    MatRipple,
-    MatTooltip
   ],
   templateUrl: './purchases-by-channels-widget.component.html',
   styleUrl: './purchases-by-channels-widget.component.scss'
@@ -30,9 +24,11 @@ export class PurchasesByChannelsWidgetComponent implements OnDestroy {
   private _elementRef = inject(ElementRef);
   private _themeManager = inject(ThemeManagerService);
   private _observer: ResizeObserver;
+  private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
 
-  @ViewChild('chartRef', { read: ElementRef, static: true })
-  private _chartRef: ElementRef;
+  readonly _chartRef = viewChild.required('chartRef', { read: ElementRef });
+
+  widget = input<Widget>();
 
   constructor() {
     afterNextRender(() => {
@@ -100,10 +96,14 @@ export class PurchasesByChannelsWidgetComponent implements OnDestroy {
           }
         ]
       };
-      const chart = echarts.init(this._chartRef.nativeElement, this._themeManager.getPreferredColorScheme());
+      const chart = echarts.init(this._chartRef().nativeElement, this._themeManager.getPreferredColorScheme());
       chart.setOption(option);
       this._observer = new ResizeObserver(() => chart.resize());
       this._observer.observe(this._elementRef.nativeElement);
+
+      if (this._dashboard && this.widget()) {
+        this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+      }
     });
   }
 

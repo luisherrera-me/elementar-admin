@@ -1,14 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { UploadFileState } from '../properties';
 
+
 @Component({
-  selector: 'emr-file',
-  exportAs: 'emrFile',
-  templateUrl: './file.component.html',
-  styleUrls: ['./file.component.scss'],
-  host: {
-    'class': 'emr-file'
-  }
+    selector: 'emr-file',
+    exportAs: 'emrFile',
+    templateUrl: './file.component.html',
+    styleUrls: ['./file.component.scss'],
+    host: {
+        'class': 'emr-file'
+    },
+    imports: []
 })
 export class FileComponent {
   @Input()

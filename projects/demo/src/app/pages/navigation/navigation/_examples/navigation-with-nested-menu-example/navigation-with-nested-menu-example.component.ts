@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
-import { EmrNavigationModule } from '@elementar/components/navigation';
 import { MatIcon } from '@angular/material/icon';
+import {
+  NavigationComponent,
+  NavigationGroupComponent, NavigationGroupMenuComponent, NavigationGroupToggleComponent,
+  NavigationGroupToggleIconDirective,
+  NavigationItemComponent
+} from '@elementar/components/navigation';
 
 @Component({
   selector: 'app-navigation-with-nested-menu-example',
-  standalone: true,
   imports: [
-    EmrNavigationModule,
-    MatIcon
+    MatIcon,
+    NavigationItemComponent,
+    NavigationGroupComponent,
+    NavigationGroupToggleIconDirective,
+    NavigationComponent,
+    NavigationGroupToggleComponent,
+    NavigationGroupMenuComponent
   ],
   templateUrl: './navigation-with-nested-menu-example.component.html',
   styleUrl: './navigation-with-nested-menu-example.component.scss'

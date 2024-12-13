@@ -14,22 +14,13 @@ import {
   Optional,
   Output,
   Self,
-  ViewChild,
-  booleanAttribute,
+  booleanAttribute, inject,
+  viewChild
 } from '@angular/core';
-import {
-  FormGroupDirective,
-  NG_VALIDATORS,
-  NgControl,
-  NgForm
-} from '@angular/forms';
-import {
-  ErrorStateMatcher,
-  _AbstractConstructor,
-  mixinErrorState,
-} from '@angular/material/core';
+import { FormGroupDirective, NG_VALIDATORS, NgControl, NgForm, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ErrorStateMatcher, MatRipple } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { MatMenu } from '@angular/material/menu';
+import { MatMenu, MatMenuTrigger, MatMenuItem } from '@angular/material/menu';
 import {
   AsYouType,
   CountryCode as CC,
@@ -42,56 +33,48 @@ import { CountryCode, Examples } from '../data/country-code';
 import { Country } from '../model/country.model';
 import { PhoneNumberFormat } from '../model/phone-number-format.model';
 import { phoneValidator } from '../phone.validator';
-// import { SearchPipe } from '../search.pipe';
-
-class EmrPhoneInputBase {
-  constructor(
-    public _defaultErrorStateMatcher: ErrorStateMatcher,
-    public _parentForm: NgForm,
-    public _parentFormGroup: FormGroupDirective,
-    public ngControl: NgControl,
-  ) { }
-}
-
-const _emrPhoneInputMixinBase: typeof EmrPhoneInputBase = mixinErrorState(
-  EmrPhoneInputBase as _AbstractConstructor<any>
-)
+import { IconComponent } from '../../icon/icon/icon.component';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/divider';
+import { MatInput } from '@angular/material/input';
+import { SearchPipe } from '../search.pipe';
 
 @Component({
-  selector: 'emr-phone-input',
-  exportAs: 'emrPhoneInput',
-  templateUrl: './phone-input.component.html',
-  styleUrls: ['./phone-input.component.scss'],
-  providers: [
-    CountryCode,
-    {
-      provide: MatFormFieldControl,
-      useExisting: PhoneInputComponent
+    selector: 'emr-phone-input',
+    exportAs: 'emrPhoneInput',
+    templateUrl: './phone-input.component.html',
+    styleUrls: ['./phone-input.component.scss'],
+    providers: [
+        CountryCode,
+        {
+            provide: MatFormFieldControl,
+            useExisting: PhoneInputComponent
+        },
+        {
+            provide: NG_VALIDATORS,
+            useValue: phoneValidator,
+            multi: true,
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        'class': 'emr-phone-input'
     },
-    {
-      provide: NG_VALIDATORS,
-      useValue: phoneValidator,
-      multi: true,
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    'class': 'emr-phone-input'
-  }
+    imports: [MatRipple, MatMenuTrigger, IconComponent, MatIcon, MatMenu, ReactiveFormsModule, FormsModule, MatMenuItem, NgClass, MatDivider, MatInput, SearchPipe]
 })
-export class PhoneInputComponent
-  extends _emrPhoneInputMixinBase
-  implements OnInit, DoCheck, OnDestroy
-{
+export class PhoneInputComponent implements OnInit, DoCheck, OnDestroy {
+  private ngControl = inject(NgControl, { optional: true });
+  private _errorStateMatcher = inject(ErrorStateMatcher);
+  private _parentForm = inject(NgForm, { optional: true });
+
   static nextId = 0;
-  @ViewChild(MatMenu)
-  matMenu!: MatMenu;
 
-  @ViewChild('menuSearchInput', { static: false })
-  menuSearchInput?: ElementRef<HTMLInputElement>;
+  readonly matMenu = viewChild.required(MatMenu);
 
-  @ViewChild('focusable', { static: false })
-  focusable!: ElementRef;
+  readonly menuSearchInput = viewChild<ElementRef<HTMLInputElement>>('menuSearchInput');
+
+  readonly focusable = viewChild.required<ElementRef>('focusable');
 
   @HostBinding()
   id = `emr-phone-input-${PhoneInputComponent.nextId++}`;
@@ -109,7 +92,7 @@ export class PhoneInputComponent
 
   @Input() enablePlaceholder = true;
   @Input() enableSearch = false;
-  @Input() errorStateMatcher: ErrorStateMatcher = this._defaultErrorStateMatcher;
+  @Input() errorStateMatcher: ErrorStateMatcher = this._errorStateMatcher;
   @Input() inputPlaceholder: string = '';
   @Input() name?: string;
   @Input() onlyCountries: string[] = [];
@@ -169,7 +152,7 @@ export class PhoneInputComponent
   phoneNumber?: string = '';
   allCountries: Country[] = [];
   preferredCountriesInDropDown: Country[] = [];
-  selectedCountry!: Country;
+  selectedCountry: Country;
   numberInstance?: PhoneNumber;
   value?: any;
   searchCriteria?: string;
@@ -200,9 +183,7 @@ export class PhoneInputComponent
     @Optional() _parentFormGroup: FormGroupDirective,
     _defaultErrorStateMatcher: ErrorStateMatcher,
   ) {
-    super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, _ngControl);
-
-    _focusMonitor.monitor(_elementRef, true).subscribe((origin) => {
+    this._focusMonitor.monitor(_elementRef, true).subscribe((origin) => {
       if (this.focused && !origin) {
         this.onTouched();
       }
@@ -211,7 +192,8 @@ export class PhoneInputComponent
       this.stateChanges.next();
     })
 
-    this.fetchCountryData()
+    this.fetchCountryData();
+
     if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
     }
@@ -255,13 +237,17 @@ export class PhoneInputComponent
 
   ngDoCheck(): void {
     if (this.ngControl) {
-      const isInvalide = this.errorStateMatcher.isErrorState(
+      const isInvalid = this.errorStateMatcher.isErrorState(
         this.ngControl.control,
         this._parentForm
       );
       this.errorState =
-        (isInvalide && !this.ngControl.control?.value) || (!this.focused ? isInvalide : false);
+        (isInvalid && !this.ngControl.control?.value) || (!this.focused ? isInvalid : false);
     }
+  }
+
+  updateErrorState() {
+
   }
 
   ngOnDestroy() {

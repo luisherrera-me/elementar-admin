@@ -4,7 +4,6 @@ import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-buttons-with-interactive-disabled-example',
-  standalone: true,
   imports: [
     MatButton,
     MatTooltip

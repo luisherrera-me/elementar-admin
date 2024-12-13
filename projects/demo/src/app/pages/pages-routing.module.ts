@@ -7,12 +7,17 @@ const routes: Routes = [
     loadComponent: () => import('./common/common.component').then(c => c.CommonComponent),
     children: [
       {
-        path: 'customization',
-        loadChildren: () => import('./customization/customization.module').then(m => m.CustomizationModule)
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard'
       },
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'customization',
+        loadChildren: () => import('./customization/customization.module').then(m => m.CustomizationModule)
       },
       {
         path: 'forms/autocomplete',
@@ -77,10 +82,6 @@ const routes: Routes = [
       {
         path: 'components/sidebar',
         loadChildren: () => import('./components/sidebar/sidebar.module').then(m => m.SidebarModule)
-      },
-      {
-        path: 'components/sidebar-widgets',
-        loadChildren: () => import('./components/sidebar-widgets/sidebar-widgets.module').then(m => m.SidebarWidgetsModule)
       },
       {
         path: 'components/bottom-sheet',
@@ -279,6 +280,10 @@ const routes: Routes = [
         loadChildren: () => import('./components/marquee/marquee.module').then(m => m.MarqueeModule)
       },
       {
+        path: 'components/text-editor',
+        loadChildren: () => import('./components/text-editor/text-editor.module').then(m => m.TextEditorModule)
+      },
+      {
         path: 'navigation/breadcrumbs',
         loadChildren: () => import('./navigation/breadcrumbs/breadcrumbs.module').then(m => m.BreadcrumbsModule)
       },
@@ -311,12 +316,12 @@ const routes: Routes = [
         loadChildren: () => import('./store/store.module').then(m => m.StoreModule)
       },
       {
-        path: 'file-manager',
-        loadChildren: () => import('./file-manager/file-manager.module').then(m => m.FileManagerModule)
-      },
-      {
         path: 'pricing',
         loadChildren: () => import('./pricing/pricing.module').then(m => m.PricingModule)
+      },
+      {
+        path: 'applications',
+        loadChildren: () => import('./applications/applications.module').then(m => m.ApplicationsModule)
       },
       {
         path: 'micro-charts',
@@ -329,11 +334,6 @@ const routes: Routes = [
       {
         path: 'service-pages',
         loadChildren: () => import('./service-pages/service-pages.module').then(m => m.ServicePagesModule)
-      },
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'dashboard'
       }
     ]
   }

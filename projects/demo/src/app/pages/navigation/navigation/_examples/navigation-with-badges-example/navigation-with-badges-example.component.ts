@@ -1,14 +1,24 @@
 import { Component } from '@angular/core';
-import { EmrNavigationModule, NavigationItemBadgeDirective } from '@elementar/components/navigation';
+import {
+  NavigationComponent,
+  NavigationGroupComponent,
+  NavigationGroupMenuComponent,
+  NavigationGroupToggleComponent,
+  NavigationItemBadgeDirective,
+  NavigationItemComponent
+} from '@elementar/components/navigation';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navigation-with-badges-example',
-  standalone: true,
   imports: [
-    EmrNavigationModule,
     MatIcon,
-    NavigationItemBadgeDirective
+    NavigationItemBadgeDirective,
+    NavigationItemComponent,
+    NavigationGroupToggleComponent,
+    NavigationGroupMenuComponent,
+    NavigationGroupComponent,
+    NavigationComponent
   ],
   templateUrl: './navigation-with-badges-example.component.html',
   styleUrl: './navigation-with-badges-example.component.scss'

@@ -15,24 +15,28 @@ import { ColorPickerControl } from '../helpers/control';
 import { UltColorPickerChangeFormat } from '../properties';
 import { Color } from '../helpers/color';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SaturationComponent } from '../saturation/saturation.component';
+import { HueComponent } from '../hue/hue.component';
+import { AlphaComponent } from '../alpha/alpha.component';
 
 @Component({
-  selector: 'emr-color-picker',
-  exportAs: 'emrColorPicker',
-  templateUrl: './color-picker.component.html',
-  styleUrls: ['color-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ColorPickerComponent),
-      multi: true
-    }
-  ],
-  host: {
-    'class': 'emr-color-picker',
-    '[class.is-disabled]': 'disabled',
-  }
+    selector: 'emr-color-picker',
+    exportAs: 'emrColorPicker',
+    templateUrl: './color-picker.component.html',
+    styleUrls: ['color-picker.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ColorPickerComponent),
+            multi: true
+        }
+    ],
+    host: {
+        'class': 'emr-color-picker',
+        '[class.is-disabled]': 'disabled',
+    },
+    imports: [SaturationComponent, HueComponent, AlphaComponent]
 })
 export class ColorPickerComponent implements OnInit, ControlValueAccessor {
   @Input()

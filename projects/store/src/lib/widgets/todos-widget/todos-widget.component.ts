@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { Component, inject, input } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {
-  MatCell,
-  MatCellDef,
+  MatCell, MatCellDef,
   MatColumnDef,
   MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef, MatTable, MatTableDataSource
 } from '@angular/material/table';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -19,6 +18,7 @@ import {
   CdkDropList,
   moveItemInArray
 } from '@angular/cdk/drag-drop';
+import { Dashboard, DASHBOARD, Widget, WidgetComponent } from '@elementar/components/dashboard';
 
 export interface TodoTask {
   name: string;
@@ -43,31 +43,39 @@ const DATA: TodoTask[] = [
 
 @Component({
   selector: 'emr-todos-widget',
-  standalone: true,
   imports: [
     MatButton,
     MatIcon,
-    MatIconButton,
     MatCell,
-    MatCellDef,
     MatCheckbox,
     MatColumnDef,
     MatHeaderCell,
     MatHeaderRow,
-    MatHeaderRowDef,
     MatRow,
-    MatRowDef,
     MatTable,
-    MatHeaderCellDef,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,
-    CdkDragPlaceholder
+    CdkDragPlaceholder,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRowDef,
+    MatRowDef
   ],
   templateUrl: './todos-widget.component.html',
   styleUrl: './todos-widget.component.scss'
 })
-export class TodosWidgetComponent {
+export class TodosWidgetComponent implements WidgetComponent {
+  private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
+
+  widget = input<Widget>();
+
+  ngOnInit() {
+    if (this._dashboard && this.widget()) {
+      this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+    }
+  }
+
   displayedColumns: string[] = ['drag', 'select', 'position', 'name', 'assignee', 'priority'];
   dataSource = new MatTableDataSource<TodoTask>(DATA);
   selection = new SelectionModel<TodoTask>(true, []);

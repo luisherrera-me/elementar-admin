@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import {
-  BasicCheckboxesExampleComponent
-} from '../../../forms/checkbox/_examples/basic-checkboxes-example/basic-checkboxes-example.component';
 import { PlaygroundComponent } from '@demo/meta/playground/playground.component';
 import { BasicTimelineExampleComponent } from '../_examples/basic-timeline-example/basic-timeline-example.component';
 import {
@@ -15,9 +12,7 @@ import { PageContentDirective } from '@demo/meta/page/page-content.directive';
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [
-    BasicCheckboxesExampleComponent,
     PlaygroundComponent,
     BasicTimelineExampleComponent,
     TimelineTimestampExampleComponent,
