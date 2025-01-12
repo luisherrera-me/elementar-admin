@@ -68,6 +68,10 @@ const routes: Routes = [
         loadChildren: () => import('./forms/number-input/number-input.module').then(m => m.NumberInputModule)
       },
       {
+        path: 'components/action-required',
+        loadChildren: () => import('./components/action-required/action-required.module').then(m => m.ActionRequiredModule)
+      },
+      {
         path: 'components/avatar',
         loadChildren: () => import('./components/avatar/avatar.module').then(m => m.AvatarModule)
       },
@@ -110,6 +114,10 @@ const routes: Routes = [
       {
         path: 'components/grid-stack',
         loadChildren: () => import('./components/grid-stack/grid-stack.module').then(m => m.GridStackModule)
+      },
+      {
+        path: 'components/timepicker',
+        loadChildren: () => import('./components/timepicker/timepicker.module').then(m => m.TimepickerModule)
       },
       {
         path: 'components/icon',

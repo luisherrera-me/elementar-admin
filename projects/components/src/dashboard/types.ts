@@ -11,6 +11,7 @@ export interface WidgetComponent {
 export interface WidgetConfig {
   type: string;
   skeleton?: any;
+  plain?: boolean;
   component: () => Promise<any>;
 }
 
@@ -21,6 +22,7 @@ export interface Widget {
   skeleton?: {
     minHeight: string;
   }
+  [propName: string]: any;
 }
 
 export const DASHBOARD = new InjectionToken('DASHBOARD');

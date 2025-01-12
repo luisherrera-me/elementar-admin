@@ -1,11 +1,13 @@
 :host {
+  --emr-dashboard-gap: theme('gap.7');
+
   @apply block;
 
   .dashgrid {
-    @apply grid grid-cols-12 gap-6;
+    @apply grid grid-cols-12 gap-[var(--emr-dashboard-gap)];
   }
 
-  .widget {
+  .widget:not(.plain) {
     @apply border rounded-2xl h-full overflow-hidden;
   }
 
