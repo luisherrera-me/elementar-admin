@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepperModule, StepperOrientation } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,20 +9,22 @@ import { map, Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
-    selector: 'app-stepper-responsive-example',
-    imports: [
-        MatStepperModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        AsyncPipe,
-    ],
-    templateUrl: './stepper-responsive-example.component.html',
-    styleUrl: './stepper-responsive-example.component.scss'
+  selector: 'app-stepper-responsive-example',
+  imports: [
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    AsyncPipe,
+  ],
+  templateUrl: './stepper-responsive-example.component.html',
+  styleUrl: './stepper-responsive-example.component.scss'
 })
 export class StepperResponsiveExampleComponent {
+  private _formBuilder = inject(FormBuilder);
+
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -35,7 +37,6 @@ export class StepperResponsiveExampleComponent {
   stepperOrientation: Observable<StepperOrientation>;
 
   constructor(
-    private _formBuilder: FormBuilder,
     breakpointObserver: BreakpointObserver,
   ) {
     this.stepperOrientation = breakpointObserver

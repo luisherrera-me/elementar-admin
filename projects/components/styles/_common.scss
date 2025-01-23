@@ -1,0 +1,438 @@
+@use "@angular/cdk/overlay-prebuilt";
+@use '@angular/material' as mat;
+@use 'material-symbols/outlined';
+
+$m3-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+    use-system-variables: true,
+    system-variables-prefix: sys,
+  ),
+  typography: (
+    brand-family: '"Open Sans", sans-serif',
+    plain-family: '"Open Sans", sans-serif',
+    use-system-variables: true,
+    system-variables-prefix: sys,
+  ),
+  density: (
+    scale: 0,
+  ),
+)) !default;
+
+$m3-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+    use-system-variables: true,
+    system-variables-prefix: sys,
+  ),
+  typography: (
+    brand-family: '"Open Sans", sans-serif',
+    plain-family: '"Open Sans", sans-serif',
+    use-system-variables: true,
+    system-variables-prefix: sys,
+  ),
+  density: (
+    scale: 0,
+  ),
+)) !default;
+
+:root {
+  --emr-neutral: #{mat.get-theme-color($m3-light-theme, neutral, 60)};
+  --emr-neutral-0: #{mat.get-theme-color($m3-light-theme, neutral, 100)};
+  --emr-neutral-50: #{mat.get-theme-color($m3-light-theme, neutral, 99)};
+  --emr-neutral-100: #{mat.get-theme-color($m3-light-theme, neutral, 98)};
+  --emr-neutral-200: #{mat.get-theme-color($m3-light-theme, neutral, 95)};
+  --emr-neutral-300: #{mat.get-theme-color($m3-light-theme, neutral, 90)};
+  --emr-neutral-400: #{mat.get-theme-color($m3-light-theme, neutral, 80)};
+  --emr-neutral-450: #{mat.get-theme-color($m3-light-theme, neutral, 70)};
+  --emr-neutral-500: #{mat.get-theme-color($m3-light-theme, neutral, 60)};
+  --emr-neutral-600: #{mat.get-theme-color($m3-light-theme, neutral, 50)};
+  --emr-neutral-650: #{mat.get-theme-color($m3-light-theme, neutral, 40)};
+  --emr-neutral-700: #{mat.get-theme-color($m3-light-theme, neutral, 35)};
+  --emr-neutral-800: #{mat.get-theme-color($m3-light-theme, neutral, 30)};
+  --emr-neutral-900: #{mat.get-theme-color($m3-light-theme, neutral, 25)};
+  --emr-neutral-950: #{mat.get-theme-color($m3-light-theme, neutral, 20)};
+  --emr-neutral-1000: #{mat.get-theme-color($m3-light-theme, neutral, 10)};
+
+  --emr-neutral-variant: #{mat.get-theme-color($m3-light-theme, neutral-variant, 60)};
+  --emr-neutral-variant-0: #{mat.get-theme-color($m3-light-theme, neutral-variant, 100)};
+  --emr-neutral-variant-50: #{mat.get-theme-color($m3-light-theme, neutral-variant, 99)};
+  --emr-neutral-variant-100: #{mat.get-theme-color($m3-light-theme, neutral-variant, 98)};
+  --emr-neutral-variant-200: #{mat.get-theme-color($m3-light-theme, neutral-variant, 95)};
+  --emr-neutral-variant-300: #{mat.get-theme-color($m3-light-theme, neutral-variant, 90)};
+  --emr-neutral-variant-400: #{mat.get-theme-color($m3-light-theme, neutral-variant, 80)};
+  --emr-neutral-variant-450: #{mat.get-theme-color($m3-light-theme, neutral-variant, 70)};
+  --emr-neutral-variant-500: #{mat.get-theme-color($m3-light-theme, neutral-variant, 60)};
+  --emr-neutral-variant-600: #{mat.get-theme-color($m3-light-theme, neutral-variant, 50)};
+  --emr-neutral-variant-650: #{mat.get-theme-color($m3-light-theme, neutral-variant, 40)};
+  --emr-neutral-variant-700: #{mat.get-theme-color($m3-light-theme, neutral-variant, 35)};
+  --emr-neutral-variant-800: #{mat.get-theme-color($m3-light-theme, neutral-variant, 30)};
+  --emr-neutral-variant-900: #{mat.get-theme-color($m3-light-theme, neutral-variant, 25)};
+  --emr-neutral-variant-950: #{mat.get-theme-color($m3-light-theme, neutral-variant, 20)};
+  --emr-neutral-variant-1000: #{mat.get-theme-color($m3-light-theme, neutral-variant, 10)};
+
+  // primary color
+  --emr-primary-0: #{mat.get-theme-color($m3-light-theme, primary, 100)};
+  --emr-primary-50: #{mat.get-theme-color($m3-light-theme, primary, 99)};
+  --emr-primary-100: #{mat.get-theme-color($m3-light-theme, primary, 98)};
+  --emr-primary-200: #{mat.get-theme-color($m3-light-theme, primary, 95)};
+  --emr-primary-300: #{mat.get-theme-color($m3-light-theme, primary, 90)};
+  --emr-primary-400: #{mat.get-theme-color($m3-light-theme, primary, 80)};
+  --emr-primary-450: #{mat.get-theme-color($m3-light-theme, primary, 70)};
+  --emr-primary-500: #{mat.get-theme-color($m3-light-theme, primary, 60)};
+  --emr-primary-600: #{mat.get-theme-color($m3-light-theme, primary, 50)};
+  --emr-primary-650: #{mat.get-theme-color($m3-light-theme, primary, 40)};
+  --emr-primary-700: #{mat.get-theme-color($m3-light-theme, primary, 35)};
+  --emr-primary-800: #{mat.get-theme-color($m3-light-theme, primary, 30)};
+  --emr-primary-900: #{mat.get-theme-color($m3-light-theme, primary, 25)};
+  --emr-primary-950: #{mat.get-theme-color($m3-light-theme, primary, 20)};
+  --emr-primary-1000: #{mat.get-theme-color($m3-light-theme, primary, 10)};
+
+  --emr-secondary-0: #{mat.get-theme-color($m3-light-theme, secondary, 100)};
+  --emr-secondary-50: #{mat.get-theme-color($m3-light-theme, secondary, 99)};
+  --emr-secondary-100: #{mat.get-theme-color($m3-light-theme, secondary, 98)};
+  --emr-secondary-200: #{mat.get-theme-color($m3-light-theme, secondary, 95)};
+  --emr-secondary-300: #{mat.get-theme-color($m3-light-theme, secondary, 90)};
+  --emr-secondary-400: #{mat.get-theme-color($m3-light-theme, secondary, 80)};
+  --emr-secondary-450: #{mat.get-theme-color($m3-light-theme, secondary, 70)};
+  --emr-secondary-500: #{mat.get-theme-color($m3-light-theme, secondary, 60)};
+  --emr-secondary-600: #{mat.get-theme-color($m3-light-theme, secondary, 50)};
+  --emr-secondary-650: #{mat.get-theme-color($m3-light-theme, secondary, 40)};
+  --emr-secondary-700: #{mat.get-theme-color($m3-light-theme, secondary, 35)};
+  --emr-secondary-800: #{mat.get-theme-color($m3-light-theme, secondary, 30)};
+  --emr-secondary-900: #{mat.get-theme-color($m3-light-theme, secondary, 25)};
+  --emr-secondary-950: #{mat.get-theme-color($m3-light-theme, secondary, 20)};
+  --emr-secondary-1000: #{mat.get-theme-color($m3-light-theme, secondary, 10)};
+
+  // tertiary color
+  --emr-tertiary-0: #{mat.get-theme-color($m3-light-theme, tertiary, 100)};
+  --emr-tertiary-50: #{mat.get-theme-color($m3-light-theme, tertiary, 99)};
+  --emr-tertiary-100: #{mat.get-theme-color($m3-light-theme, tertiary, 98)};
+  --emr-tertiary-200: #{mat.get-theme-color($m3-light-theme, tertiary, 95)};
+  --emr-tertiary-300: #{mat.get-theme-color($m3-light-theme, tertiary, 90)};
+  --emr-tertiary-400: #{mat.get-theme-color($m3-light-theme, tertiary, 80)};
+  --emr-tertiary-450: #{mat.get-theme-color($m3-light-theme, tertiary, 70)};
+  --emr-tertiary-500: #{mat.get-theme-color($m3-light-theme, tertiary, 60)};
+  --emr-tertiary-600: #{mat.get-theme-color($m3-light-theme, tertiary, 50)};
+  --emr-tertiary-650: #{mat.get-theme-color($m3-light-theme, tertiary, 40)};
+  --emr-tertiary-700: #{mat.get-theme-color($m3-light-theme, tertiary, 35)};
+  --emr-tertiary-800: #{mat.get-theme-color($m3-light-theme, tertiary, 30)};
+  --emr-tertiary-900: #{mat.get-theme-color($m3-light-theme, tertiary, 25)};
+  --emr-tertiary-950: #{mat.get-theme-color($m3-light-theme, tertiary, 20)};
+  --emr-tertiary-1000: #{mat.get-theme-color($m3-light-theme, tertiary, 10)};
+
+  --emr-error-0: #{mat.get-theme-color($m3-light-theme, error, 100)};
+  --emr-error-50: #{mat.get-theme-color($m3-light-theme, error, 99)};
+  --emr-error-100: #{mat.get-theme-color($m3-light-theme, error, 98)};
+  --emr-error-200: #{mat.get-theme-color($m3-light-theme, error, 95)};
+  --emr-error-300: #{mat.get-theme-color($m3-light-theme, error, 90)};
+  --emr-error-400: #{mat.get-theme-color($m3-light-theme, error, 80)};
+  --emr-error-450: #{mat.get-theme-color($m3-light-theme, error, 70)};
+  --emr-error-500: #{mat.get-theme-color($m3-light-theme, error, 60)};
+  --emr-error-600: #{mat.get-theme-color($m3-light-theme, error, 50)};
+  --emr-error-650: #{mat.get-theme-color($m3-light-theme, error, 40)};
+  --emr-error-700: #{mat.get-theme-color($m3-light-theme, error, 35)};
+  --emr-error-800: #{mat.get-theme-color($m3-light-theme, error, 30)};
+  --emr-error-900: #{mat.get-theme-color($m3-light-theme, error, 25)};
+  --emr-error-950: #{mat.get-theme-color($m3-light-theme, error, 20)};
+  --emr-error-1000: #{mat.get-theme-color($m3-light-theme, error, 10)};
+
+  --emr-inverse: #{mat.get-theme-color($m3-light-theme, neutral, 50)};
+  --emr-border: var(--sys-surface-dim);
+
+  --mat-table-row-item-outline-color: theme('borderColor.DEFAULT');
+  --emr-transition-transform: transform .15s linear;
+  --mdc-protected-button-container-height: 2.375rem;
+  --mat-menu-item-label-text-size: theme('fontSize.tiny');
+  --mat-option-label-text-size: theme('fontSize.tiny');
+
+  --emr-background: var(--mat-app-background-color);
+  --emr-on-background: var(--mat-app-text-color);
+
+  @include mat.all-component-themes($m3-light-theme);
+  @include mat.typography-hierarchy($m3-light-theme);
+  @include mat.system-level-colors($m3-light-theme);
+  @include mat.system-level-typography($m3-light-theme);
+}
+
+.link {
+  @apply text-primary hover:text-tertiary;
+}
+
+.mat-icon {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+
+  &.filled {
+    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+}
+
+// internal angular material icon font
+.material-icons {
+  word-wrap: normal;
+  font-family: 'Material Symbols Outlined', serif;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body {
+  @apply min-h-screen font-sans;
+
+  *:not(.emr-native-scroll) {
+    &::-webkit-scrollbar {
+      @apply bg-none w-[8px] h-[8px];
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply bg-neutral-200 rounded-sm;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply rounded-sm bg-neutral-300 hover:bg-neutral-400;
+    }
+  }
+
+  .emr-scroll-lg {
+    &::-webkit-scrollbar {
+      @apply w-[11px] h-[11px];
+    }
+  }
+}
+
+.mdc-icon-button {
+  line-height: 0;
+}
+
+.mat-mdc-menu-panel {
+  max-width: none !important;
+}
+
+.emr-button-loading {
+  .mat-button-wrapper {
+    visibility: hidden;
+  }
+
+  .mat-mdc-progress-spinner {
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
+  }
+}
+
+.mdc-notched-outline__notch {
+  border-right: none;
+}
+
+input.emr-number-input-no-spinners::-webkit-outer-spin-button,
+input.emr-number-input-no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+code {
+  @apply text-primary;
+}
+
+input[type=number].emr-number-input-no-spinners {
+  -moz-appearance: textfield;
+}
+
+/* Animate items as they're being sorted. */
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Animate an item that has been dropped. */
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.emr-table {
+  @apply my-0 text-sm w-full;
+
+  th,
+  td {
+    @apply px-4 py-3 align-middle text-left;
+  }
+
+  th {
+    height: var(--mat-table-row-item-container-height);
+  }
+
+  td {
+    height: var(--mat-table-row-item-container-height);
+    border-top: 1px solid theme('borderColor.DEFAULT');
+  }
+
+  tr {
+    color: var(--mat-table-row-item-label-text-color);
+  }
+}
+
+.mat-mdc-table {
+  --mat-table-row-item-outline-color: theme('colors.neutral.300');
+}
+
+.mat-mdc-row {
+  &.cdk-drag-preview {
+    @apply bg-primary-50 w-full border-b-transparent;
+
+    td {
+      vertical-align: middle;
+      height: inherit;
+      @apply border-b-transparent;
+    }
+  }
+}
+
+.table-row-drag-placeholder {
+  @apply bg-primary-200 h-[var(--mat-table-row-item-container-height)];
+}
+
+html {
+  @apply font-sans antialiased min-h-screen bg-[var(--emr-background)] text-[var(--emr-on-background)];
+
+  &.dark {
+    --emr-neutral-0: #{mat.get-theme-color($m3-dark-theme, neutral, 100)};
+    --emr-neutral-50: #{mat.get-theme-color($m3-dark-theme, neutral, 99)};
+    --emr-neutral-100: #{mat.get-theme-color($m3-dark-theme, neutral, 98)};
+    --emr-neutral-200: #{mat.get-theme-color($m3-dark-theme, neutral, 95)};
+    --emr-neutral-300: #{mat.get-theme-color($m3-dark-theme, neutral, 90)};
+    --emr-neutral-400: #{mat.get-theme-color($m3-dark-theme, neutral, 80)};
+    --emr-neutral-450: #{mat.get-theme-color($m3-dark-theme, neutral, 70)};
+    --emr-neutral-500: #{mat.get-theme-color($m3-dark-theme, neutral, 60)};
+    --emr-neutral-600: #{mat.get-theme-color($m3-dark-theme, neutral, 50)};
+    --emr-neutral-650: #{mat.get-theme-color($m3-dark-theme, neutral, 40)};
+    --emr-neutral-700: #{mat.get-theme-color($m3-dark-theme, neutral, 35)};
+    --emr-neutral-800: #{mat.get-theme-color($m3-dark-theme, neutral, 30)};
+    --emr-neutral-900: #{mat.get-theme-color($m3-dark-theme, neutral, 25)};
+    --emr-neutral-950: #{mat.get-theme-color($m3-dark-theme, neutral, 20)};
+    --emr-neutral-1000: #{mat.get-theme-color($m3-dark-theme, neutral, 10)};
+
+    --emr-neutral-variant-0: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 100)};
+    --emr-neutral-variant-50: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 99)};
+    --emr-neutral-variant-100: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 98)};
+    --emr-neutral-variant-200: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 95)};
+    --emr-neutral-variant-300: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 90)};
+    --emr-neutral-variant-400: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 80)};
+    --emr-neutral-variant-450: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 70)};
+    --emr-neutral-variant-500: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 60)};
+    --emr-neutral-variant-600: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 50)};
+    --emr-neutral-variant-650: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 40)};
+    --emr-neutral-variant-700: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 35)};
+    --emr-neutral-variant-800: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 30)};
+    --emr-neutral-variant-900: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 25)};
+    --emr-neutral-variant-950: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 20)};
+    --emr-neutral-variant-1000: #{mat.get-theme-color($m3-dark-theme, neutral-variant, 10)};
+
+    // primary color
+    --emr-primary-0: #{mat.get-theme-color($m3-dark-theme, primary, 100)};
+    --emr-primary-50: #{mat.get-theme-color($m3-dark-theme, primary, 99)};
+    --emr-primary-100: #{mat.get-theme-color($m3-dark-theme, primary, 98)};
+    --emr-primary-200: #{mat.get-theme-color($m3-dark-theme, primary, 95)};
+    --emr-primary-300: #{mat.get-theme-color($m3-dark-theme, primary, 90)};
+    --emr-primary-400: #{mat.get-theme-color($m3-dark-theme, primary, 80)};
+    --emr-primary-450: #{mat.get-theme-color($m3-dark-theme, primary, 70)};
+    --emr-primary-500: #{mat.get-theme-color($m3-dark-theme, primary, 60)};
+    --emr-primary-600: #{mat.get-theme-color($m3-dark-theme, primary, 50)};
+    --emr-primary-650: #{mat.get-theme-color($m3-dark-theme, primary, 40)};
+    --emr-primary-700: #{mat.get-theme-color($m3-dark-theme, primary, 35)};
+    --emr-primary-800: #{mat.get-theme-color($m3-dark-theme, primary, 30)};
+    --emr-primary-900: #{mat.get-theme-color($m3-dark-theme, primary, 25)};
+    --emr-primary-950: #{mat.get-theme-color($m3-dark-theme, primary, 20)};
+    --emr-primary-1000: #{mat.get-theme-color($m3-dark-theme, primary, 10)};
+
+    --emr-secondary-0: #{mat.get-theme-color($m3-dark-theme, secondary, 100)};
+    --emr-secondary-50: #{mat.get-theme-color($m3-dark-theme, secondary, 99)};
+    --emr-secondary-100: #{mat.get-theme-color($m3-dark-theme, secondary, 98)};
+    --emr-secondary-200: #{mat.get-theme-color($m3-dark-theme, secondary, 95)};
+    --emr-secondary-300: #{mat.get-theme-color($m3-dark-theme, secondary, 90)};
+    --emr-secondary-400: #{mat.get-theme-color($m3-dark-theme, secondary, 80)};
+    --emr-secondary-450: #{mat.get-theme-color($m3-dark-theme, secondary, 70)};
+    --emr-secondary-500: #{mat.get-theme-color($m3-dark-theme, secondary, 60)};
+    --emr-secondary-600: #{mat.get-theme-color($m3-dark-theme, secondary, 50)};
+    --emr-secondary-650: #{mat.get-theme-color($m3-dark-theme, secondary, 40)};
+    --emr-secondary-700: #{mat.get-theme-color($m3-dark-theme, secondary, 35)};
+    --emr-secondary-800: #{mat.get-theme-color($m3-dark-theme, secondary, 30)};
+    --emr-secondary-900: #{mat.get-theme-color($m3-dark-theme, secondary, 25)};
+    --emr-secondary-950: #{mat.get-theme-color($m3-dark-theme, secondary, 20)};
+    --emr-secondary-1000: #{mat.get-theme-color($m3-dark-theme, secondary, 10)};
+
+    // tertiary color
+    --emr-tertiary-0: #{mat.get-theme-color($m3-dark-theme, tertiary, 100)};
+    --emr-tertiary-50: #{mat.get-theme-color($m3-dark-theme, tertiary, 99)};
+    --emr-tertiary-100: #{mat.get-theme-color($m3-dark-theme, tertiary, 98)};
+    --emr-tertiary-200: #{mat.get-theme-color($m3-dark-theme, tertiary, 95)};
+    --emr-tertiary-300: #{mat.get-theme-color($m3-dark-theme, tertiary, 90)};
+    --emr-tertiary-400: #{mat.get-theme-color($m3-dark-theme, tertiary, 80)};
+    --emr-tertiary-450: #{mat.get-theme-color($m3-dark-theme, tertiary, 70)};
+    --emr-tertiary-500: #{mat.get-theme-color($m3-dark-theme, tertiary, 60)};
+    --emr-tertiary-600: #{mat.get-theme-color($m3-dark-theme, tertiary, 50)};
+    --emr-tertiary-650: #{mat.get-theme-color($m3-dark-theme, tertiary, 40)};
+    --emr-tertiary-700: #{mat.get-theme-color($m3-dark-theme, tertiary, 35)};
+    --emr-tertiary-800: #{mat.get-theme-color($m3-dark-theme, tertiary, 30)};
+    --emr-tertiary-900: #{mat.get-theme-color($m3-dark-theme, tertiary, 25)};
+    --emr-tertiary-950: #{mat.get-theme-color($m3-dark-theme, tertiary, 20)};
+    --emr-tertiary-1000: #{mat.get-theme-color($m3-dark-theme, tertiary, 10)};
+
+    --emr-error-0: #{mat.get-theme-color($m3-dark-theme, error, 100)};
+    --emr-error-50: #{mat.get-theme-color($m3-dark-theme, error, 99)};
+    --emr-error-100: #{mat.get-theme-color($m3-dark-theme, error, 98)};
+    --emr-error-200: #{mat.get-theme-color($m3-dark-theme, error, 95)};
+    --emr-error-300: #{mat.get-theme-color($m3-dark-theme, error, 90)};
+    --emr-error-400: #{mat.get-theme-color($m3-dark-theme, error, 80)};
+    --emr-error-450: #{mat.get-theme-color($m3-dark-theme, error, 70)};
+    --emr-error-500: #{mat.get-theme-color($m3-dark-theme, error, 60)};
+    --emr-error-600: #{mat.get-theme-color($m3-dark-theme, error, 50)};
+    --emr-error-650: #{mat.get-theme-color($m3-dark-theme, error, 40)};
+    --emr-error-700: #{mat.get-theme-color($m3-dark-theme, error, 35)};
+    --emr-error-800: #{mat.get-theme-color($m3-dark-theme, error, 30)};
+    --emr-error-900: #{mat.get-theme-color($m3-dark-theme, error, 25)};
+    --emr-error-950: #{mat.get-theme-color($m3-dark-theme, error, 20)};
+    --emr-error-1000: #{mat.get-theme-color($m3-dark-theme, error, 10)};
+
+    --mat-table-row-item-outline-color: theme('colors.neutral.300');
+    --emr-warn: theme('colors.red.500');
+    --emr-border: var(--sys-surface-variant);
+
+    @include mat.all-component-colors($m3-dark-theme);
+    @include mat.system-level-colors($m3-dark-theme);
+    @include mat.system-level-typography($m3-dark-theme);
+
+    .emr-table {
+      td {
+        height: var(--mat-table-row-item-container-height);
+      }
+    }
+
+    .mat-mdc-table {
+      --mat-table-row-item-outline-color: theme('colors.neutral.600');
+    }
+
+    .mat-mdc-row {
+      &.cdk-drag-preview {
+        @apply bg-neutral-700;
+      }
+    }
+
+    .table-row-drag-placeholder {
+      @apply bg-neutral-600;
+    }
+
+    body {
+      *:not(.emr-native-scroll) {
+        &::-webkit-scrollbar-track {
+          @apply bg-neutral-700;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          @apply rounded-sm bg-neutral-600 hover:bg-neutral-500;
+        }
+      }
+    }
+  }
+}

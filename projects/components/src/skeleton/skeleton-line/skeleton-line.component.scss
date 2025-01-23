@@ -1,17 +1,30 @@
 :host {
-  animation: var(--emr-skeleton-item-animation);
-  display: block;
-  flex: none;
-}
+  --emr-skeleton-line-height: theme('height.5');
+  --emr-skeleton-line-width: theme('width.full');
+  --emr-skeleton-line-border-radius: theme('borderRadius.full');
 
-:host:not([class*="w-"]):not([class*="size-"]) {
-  width: var(--emr-skeleton-line-width);
-}
+  animation: emr-skeleton-loading 1s linear infinite alternate;
+  @apply block flex-none;
 
-:host:not([class*="h-"]):not([class*="size-"]) {
-  height: var(--emr-skeleton-line-height);
-}
+  &:not([class*="w-"]):not([class*="size-"]) {
+    width: var(--emr-skeleton-line-width);
+  }
 
-:host:not([class*="rounded-"]) {
-  border-radius: var(--emr-skeleton-line-border-radius);
+  &:not([class*="h-"]):not([class*="size-"]) {
+    height: var(--emr-skeleton-line-height);
+  }
+
+  &:not([class*="rounded-"]) {
+    @apply rounded-[var(--emr-skeleton-line-border-radius)];
+  }
+
+  @keyframes emr-skeleton-loading {
+    0% {
+      background: var(--emr-skeleton-from-bg);
+    }
+
+    100% {
+      background: var(--emr-skeleton-from-to);
+    }
+  }
 }
