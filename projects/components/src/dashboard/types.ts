@@ -19,6 +19,7 @@ export interface Widget {
   id: any;
   type: string;
   columns: number;
+  data: number;
   skeleton?: {
     minHeight: string;
   }

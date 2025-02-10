@@ -1,4 +1,4 @@
-# Elementar Admin
+# SIAL-ADMIN
 
 [Overview](https://elementarui.com) | [Live Demo](https://demo.elementarui.com/pages/dashboard/basic) | [Documentation](https://elementarui.com/documentation)
 
@@ -11,7 +11,7 @@
 ## Key features
 
 - Based on the most popular Angular material components
-- All components are designed from scratch specifically for the elementar admin
+- All components are designed from scratch specifically for the SIAL-ADMIN
 - It has a large number of components aimed at creating real projects
 - Free and Open Source for personal and commercial purposes
 

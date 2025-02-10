@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    loadComponent: () => import('./signin/signin.component').then(c => c.SigninComponent)
+  },
+  {
     path: 'sign-in',
     loadComponent: () => import('./signin/signin.component').then(c => c.SigninComponent)
   },

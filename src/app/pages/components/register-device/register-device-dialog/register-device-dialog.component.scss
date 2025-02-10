@@ -1,0 +1,31 @@
+.full-width {
+    width: 100%;
+  }
+  mat-form-field:first-of-type {
+    margin-top: 12px;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Espacio entre los botones */
+  }
+  
+  button mat-icon {
+    margin-right: 5px;
+  }
+  .cancel-button {
+    background-color: rgba(255, 0, 0, 0.6); /* Rojo semitransparente */
+    color: white;
+    border-radius: 50
+    px; /* Bordes redondeados */
+    padding: 8px 16px;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: rgba(255, 0, 0, 0.9); /* Más rojo al pasar el mouse */
+    }
+  }
+
+  
+  

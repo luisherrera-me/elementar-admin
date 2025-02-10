@@ -4,6 +4,7 @@ import { ScreenLoaderComponent } from '@app/screen-loader/screen-loader.componen
 import { isPlatformBrowser } from '@angular/common';
 import { filter } from 'rxjs';
 import { PageLoadingBarComponent } from '@elementar/components/page-loading-bar';
+import {  GoogleMapsModule } from '@angular/google-maps'
 import {
   AnalyticsService, EnvironmentService,
   InactivityTrackerService,
@@ -14,6 +15,7 @@ import {
 @Component({
     selector: 'app-root',
     imports: [
+      
         RouterOutlet,
         ScreenLoaderComponent,
         PageLoadingBarComponent

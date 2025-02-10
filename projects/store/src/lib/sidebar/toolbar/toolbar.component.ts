@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatBadge } from '@angular/material/badge';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -19,8 +19,9 @@ import { HDividerComponent } from '@elementar/components/divider';
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss'
 })
+
 export class ToolbarComponent {
-  subscription = 'Free';
-  email = 'elementarlabs@gmail.com';
-  name = 'Pavel Salauyou';
+  @Input() subscription: string;
+  @Input() email: string;
+  @Input() name: string;
 }

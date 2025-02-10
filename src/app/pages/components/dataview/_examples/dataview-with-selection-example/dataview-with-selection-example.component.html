@@ -1,0 +1,17 @@
+<div class="mb-10 flex gap-3">
+  <button mat-stroked-button (click)="dataView.api.selectAll()">Select All</button>
+  <button mat-stroked-button (click)="dataView.api.unselectAll()">Unselect All</button>
+</div>
+
+<emr-data-view #dataView="emrDataView"
+               [columnDefs]="columnDefs"
+               [data]="data"
+               withSelection
+               (rowSelectionChanged)="rowSelectionChanged($event)"
+               (selectionChanged)="selectionChanged($event)"
+               (allRowsSelectionChanged)="allRowsSelectionChanged($event)"></emr-data-view>
+
+<div class="mt-8">
+  <div class="text-sm">Selected rows:</div>
+  <pre class="mt-2">{{ selectedRows | json }}</pre>
+</div>

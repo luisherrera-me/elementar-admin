@@ -1,0 +1,11 @@
+// styles.scss
+::ng-deep {
+    .green-button {
+      background-color: #4caf50; // Verde
+      color: white;
+      &:hover {
+        background-color: #388e3c; // Verde oscuro al pasar el mouse
+      }
+    }
+  }
+  

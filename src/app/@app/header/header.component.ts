@@ -1,23 +1,23 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit, viewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
 import { MatBadge } from '@angular/material/badge';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-
 import { SoundEffectDirective, ThemeManagerService } from '@elementar/components/core';
 import { LayoutApiService } from '@elementar/components/layout';
 import { DicebearComponent } from '@elementar/components/avatar';
-import { Notification } from '@elementar/components/notifications';
 import { AssistantSearchComponent, NotificationsPopoverComponent } from '@elementar/store/header';
-import { PopoverTriggerForDirective } from '../../../../projects/components/src/popover/popover-trigger-for.directive';
-
+import { PopoverTriggerForDirective } from '@elementar/components/popover';
+import { AuthService } from '../../core/services/auth.service';
 @Component({
   selector: 'app-header',
   imports: [
     MatIcon,
+    CommonModule,
     MatIconButton,
     MatBadge,
     MatMenu,
@@ -27,66 +27,25 @@ import { PopoverTriggerForDirective } from '../../../../projects/components/src/
     MatDivider,
     MatButton,
     MatTooltip,
-    PopoverTriggerForDirective,
     RouterLink,
     AssistantSearchComponent,
     MatAnchor,
     SoundEffectDirective,
-    NotificationsPopoverComponent
-],
+    NotificationsPopoverComponent,
+    PopoverTriggerForDirective
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   host: {
     'class': 'block w-full h-full'
   }
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   protected _themeManager = inject(ThemeManagerService);
   private _layoutApi = inject(LayoutApiService);
-
+  users: any = null;
   @Input()
   sidebarHidden = false;
-
-  notifications: Notification[] = [
-    {
-      actor: {
-        id: 1,
-        name: 'Justin Hansen',
-        username: 'justin.hansen',
-        avatarUrl: 'assets/avatars/1.svg'
-      },
-      notifier: {
-        id: 2,
-        name: 'Elma Johnson',
-        username: 'elma.johnson',
-        avatarUrl: 'assets/avatars/2.svg'
-      },
-      payload: {
-        content: 'what did you say?'
-      },
-      type: 'mentionedInComment',
-      createdAt: '1 hour ago'
-    },
-    {
-      actor: {
-        id: 3,
-        name: 'Johnny Gladden',
-        username: 'johnny.gladden',
-        avatarUrl: 'assets/avatars/3.svg'
-      },
-      notifier: {
-        id: 4,
-        name: 'Angela Naylor',
-        username: 'angela.naylor',
-        avatarUrl: 'assets/avatars/4.svg'
-      },
-      payload: {
-        folderName: 'My New Project'
-      },
-      type: 'inviteToEditFilesInFolder',
-      createdAt: '2 hours ago'
-    }
-  ];
 
   toggleSidebar(): void {
     if (!this.sidebarHidden) {
@@ -97,4 +56,24 @@ export class HeaderComponent {
 
     this.sidebarHidden = !this.sidebarHidden;
   }
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  constructor(
+        private authService: AuthService
+      ) {}
+    
+      logout(): void {
+  
+        this.authService.logout();
+      }
+  
+    loadUsers(): void {
+      const userData = this.authService.getUserStorage(); 
+      //console.log("usuario data", userData) Obtén el usuario desde el servicio
+      if (userData) {
+        this.users = userData;
+      }
+    }
 }
