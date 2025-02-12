@@ -15,7 +15,8 @@ const routes: Routes = [
   {
     path: 'ecommerce/:id',
     title: 'Ecommerce Dashboard',
-    loadComponent: () => import('./ecommerce/ecommerce.component').then(c => c.EcommerceComponent)
+    loadComponent: () => import('./ecommerce/ecommerce.component').then(c => c.EcommerceComponent),
+    data: { renderMode: 'default' } // ❌ Evita prerendering en esta ruta
   },
   {
     path: 'finance',
