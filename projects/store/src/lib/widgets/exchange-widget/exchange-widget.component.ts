@@ -24,53 +24,33 @@ export class ExchangeWidgetComponent implements OnInit {
   private _destroyRef = inject(DestroyRef);
   private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
 
-  widget = input<Widget>();
+  currentValue: number = 0; // Para almacenar el valor actual del widget
+  valor: string; // La diferencia calculada
+  widget = input.required<Widget>();
 
-  conversionFromRate: number = 1.3275;
+  ngOnInit() {
+    if (this._dashboard && this.widget()) {
+      this._dashboard.markWidgetAsLoaded(this.widget()?.id);
+      
+      this.currentValue = parseFloat((this.widget()['data']/ 1000).toFixed(2));
+      this.valor = (this.currentValue * 737.6).toFixed(2);
+      this.valor = parseFloat(this.valor).toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+
+
+    }
+  }
+  conversionFromRate: number = 737.6;
   conversionToRate: number = 0.7532;
-  currentConversionRate = 1.3275;
-  currencyFrom = 'GPB';
-  currencyTo = 'USD';
+  currentConversionRate = 737.6;
+  currencyFrom = 'kWh';
+  currencyTo = '$COP';
 
   form: FormGroup = this._fb.group({
     from: [],
     to: []
   });
 
-  ngOnInit() {
-    if (this._dashboard && this.widget()) {
-      this._dashboard.markWidgetAsLoaded(this.widget()?.id);
-    }
-
-    this.form.get('from')
-      ?.valueChanges
-      .pipe(
-        takeUntilDestroyed(this._destroyRef)
-      )
-      .subscribe((value: number) => {
-        if (value !== null) {
-          const result = (value * this.currentConversionRate).toFixed(4);
-          this.form.get('to')?.setValue(result, {
-            emitEvent: false
-          });
-        }
-      })
-    ;
-    this.form.get('to')
-      ?.valueChanges
-      .pipe(
-        takeUntilDestroyed(this._destroyRef)
-      )
-      .subscribe((value: number) => {
-        if (value !== null) {
-          const result = (value / this.currentConversionRate).toFixed(4);
-          this.form.get('from')?.setValue(result, {
-            emitEvent: false
-          });
-        }
-      })
-    ;
-  }
+  
 
   toggleCurrencies() {
     const prevCurrencyFrom = this.currencyFrom;

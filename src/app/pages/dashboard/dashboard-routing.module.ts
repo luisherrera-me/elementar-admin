@@ -13,7 +13,7 @@ const routes: Routes = [
     loadComponent: () => import('./basic/basic.component').then(c => c.BasicComponent)
   },
   {
-    path: 'ecommerce/:id',
+    path: 'ecommerce',
     title: 'Ecommerce Dashboard',
     loadComponent: () => import('./ecommerce/ecommerce.component').then(c => c.EcommerceComponent),
     data: { renderMode: 'default' } // ❌ Evita prerendering en esta ruta

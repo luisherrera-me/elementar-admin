@@ -7,6 +7,8 @@ import { MatIcon } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
 import { MatChipsModule } from '@angular/material/chips';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import {
   DataView,
   DataViewActionBarComponent, DataViewActionBarDirective, DataViewAPI,
@@ -119,15 +121,16 @@ export class PostListComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private apiService: DeviceService,
-    private sensorService: SensorService
+    private sensorService: SensorService,
+    private snackBar: MatSnackBar  // Agregado
   ) {}
 
   status = 'all';
   columnDefs = [
     { name: 'ID', dataField: 'id', visible: false },
     { name: 'Nombre', dataField: 'sensorName', visible: true },
-    { name: 'IP', dataField: 'ip', visible: true },
-    { name: 'MAC', dataField: 'mac', visible: false },
+    { name: 'IP', dataField: 'ip', visible: false },
+    { name: 'MAC', dataField: 'mac', visible: true },
     { name: 'Modelo', dataField: 'model', visible: true },
     { name: 'Firmware', dataField: 'firmware', visible: false },
     { name: 'Estado', dataField: 'state', dataRenderer: 'status', visible: true }, // Nueva columna de estado
@@ -286,7 +289,7 @@ export class PostListComponent implements OnInit {
       return;
     }
     const newState = !device;
-    this.router.navigate(['/pages/dashboard/ecommerce', device]);
+    this.router.navigate(['/pages/dashboard/ecommerce'], { queryParams: { id: device } });
   }
 
 }

@@ -73,12 +73,6 @@ export class SidebarComponent implements OnInit {
         {
           key: uuid(),
           type: 'link',
-          name: 'Ecommerce',
-          link: '/pages/dashboard/ecommerce'
-        },
-        {
-          key: uuid(),
-          type: 'link',
           name: 'Finance',
           link: '/pages/dashboard/finance'
         },

@@ -20,7 +20,7 @@ export class TotalSubscribersWidgetComponent implements OnInit, OnChanges {
   private _dashboard = inject<Dashboard>(DASHBOARD, { optional: true });
 
   widget = input.required<Widget>();
-
+  data: number = 0; // Para almacenar el valor actual del widget
   previousValue: number = 0; // El valor anterior de la energía (este es solo un ejemplo)
   currentValue: number = 0; // Para almacenar el valor actual del widget
   difference: number = 0; // La diferencia calculada
@@ -28,26 +28,17 @@ export class TotalSubscribersWidgetComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this._dashboard && this.widget()) {
       this._dashboard.markWidgetAsLoaded(this.widget()?.id);
-      
-      // Obtener el valor inicial de los datos del widget
-      this.currentValue = this.widget()['data'];
+      this.data = parseFloat((this.widget()['data']/ 1000).toFixed(2));
+      this.currentValue = this.widget()['data']
       this.previousValue = this.currentValue;
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Verifica si el valor del widget ha cambiado
     if (changes['widget']) {
-      // Obtener el nuevo valor del widget
       const newValue = this.widget()['data'];
-
-      // Calcular la diferencia entre el valor actual y el valor anterior
       this.difference = newValue - this.previousValue;
-
-      // Actualizar el valor anterior para la próxima comparación
       this.previousValue = newValue;
-
-      // Actualizar el valor actual con el nuevo valor
       this.currentValue = newValue;
     }
   }

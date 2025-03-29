@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'register-device',
     title: 'Dialog',
     loadComponent: () => import('./register-device-dialog/register-device-dialog.component').then(c => c.RegisterDeviceDialogComponent)
   }

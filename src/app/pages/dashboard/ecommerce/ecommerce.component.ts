@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { MatCardModule } from '@angular/material/card';
+import { Component } from '@angular/core';
 
+import { MatDialog } from '@angular/material/dialog';
+import { OverviewComponent } from '../../components/report-pdf/overview/overview.component';
 import {
   MatDatepickerToggle,
   MatDateRangeInput,
@@ -20,15 +16,24 @@ import {
   DashboardStatsWidgetSkeletonComponent
 } from '@elementar/store/skeleton';
 import { DashboardComponent, Widget, WidgetConfig } from '@elementar/components/dashboard';
+import { ActivatedRoute } from '@angular/router';
 import { DeviceService } from '../../../core/services/device/device.service';
+import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard } from '@angular/material/card';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+
+
 @Component({
   selector: 'app-ecommerce',
   imports: [
-    MatCardModule,
-    MatButton,
+    FormsModule,
+    MatButtonModule,
     GoogleMapsModule,
+    MatCard,
     MatIcon,
-    CommonModule,
     MatDateRangeInput,
     MatEndDate,
     MatStartDate,
@@ -41,7 +46,7 @@ import { DeviceService } from '../../../core/services/device/device.service';
   templateUrl: './ecommerce.component.html',
   styleUrl: './ecommerce.component.scss'
 })
-export class EcommerceComponent implements OnInit {
+export class EcommerceComponent {
   configs: WidgetConfig[] = [
     {
       type: 'total-revenue-widget',
@@ -95,112 +100,107 @@ export class EcommerceComponent implements OnInit {
           .then(c => c.CustomerSatisfactionWidgetComponent)
     },
     {
-      type: 'tasks-in-progress-widget',
-      component: () =>
-        import('@elementar/store/widgets/tasks-in-progress-widget/tasks-in-progress-widget.component')
-        .then(c => c.TasksInProgressWidgetComponent)
-    },
-    {
       type: 'todos-widget',
       skeleton: null,
       component: () =>
-        import('@elementar/store/widgets/todos-widget/todos-widget.component')
+        import('@elementar/store/widgets/sensor-status-history-widget/todos-widget.component')
         .then(c => c.TodosWidgetComponent)
     }
   ];
 
   id!: number;
-  center = { lat: 0, lng: 0 }; 
+  center = {lat: 0, lng: 0};
   zoom = 17;
-  markerPosition = { lat: 0, lng: 0 };
-  device: any = {}; // Asegurar que device siempre tenga una estructura válida
+  markerPosition = {lat: 0, lng: 0};
+  device: any = {}
+  startDate!: Date;
+  endDate!: Date;
   
-  widgets: Widget[] = []; // Define widgets como propiedad de la clase
+  widgets: Widget[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private deviceService: DeviceService
+    private router: Router,
+    private deviceService: DeviceService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
-    this.id = Number(this.route.snapshot.paramMap.get('id')) || 0;
+    this.route.queryParams.subscribe(params => {
+      this.id = Number(params['id']) || 0;
+  
+      if (this.id) {
+        console
+        this.deviceService.getDeviceById(this.id).subscribe((data) => {
+          this.device = data || {};
+  
+          if (this.device.latitude && this.device.longitude) {
+            this.center = { lat: this.device.latitude, lng: this.device.longitude };
+            this.markerPosition = { lat: this.device.latitude, lng: this.device.longitude };
+          }
+          this.updateWidgets();
+        });
+      } else {
+        this.router.navigate(['/pages/dashboard/ecommerce']);
+      }
+    });
+  }
 
-    if (this.id) {
-      this.deviceService.getDeviceById(this.id).subscribe((data) => {
-        this.device = data || {}; 
-
-        // Asigna coordenadas si existen
-        if (this.device.latitude && this.device.longitude) {
-          this.center = { lat: this.device.latitude, lng: this.device.longitude };
-          this.markerPosition = { lat: this.device.latitude, lng: this.device.longitude };
+  private updateWidgets(): void {
+    this.widgets = [
+      {
+        id: 7,
+        data: this.device.aenergyTotal,
+        type: 'exchange-widget',
+        columns: 3,
+        skeleton: {
+          minHeight: '300px'
         }
+      },
+      {
+        id: 8,
+        data: 0,
+        type: 'customer-satisfaction-widget',
+        columns: 4,
+        skeleton: {
+          minHeight: '300px'
+        }
+      },
+      {
+        id: 10,
+        type: 'todos-widget',
+        columns: 4,
+        data: this.id,
+        skeleton: { minHeight: '200px' }
+      },
+      {
+        id: 4,
+        data: 0,
+        type: 'purchases-by-channels-widget',
+        columns: 6
+      },
+      {
+        id: 5,
+        data: 0,
+        type: 'visitor-insights-widget',
+        columns: 6
+      }
+    ];;
 
-        // **Asignar datos a los widgets**
-        this.widgets = [
-          {
-            id: 1,
-            type: 'total-revenue-widget',
-            columns: 3,
-            data: this.device.apower ?? 0,  // Asegurar que siempre haya un valor
-          },
-          {
-            id: 2,
-            type: 'site-visitors-widget',
-            columns: 3,
-            data: this.device.energyTotal ?? 0, // Asegurar que siempre haya un valor
-          },
-          {
-            id: 3,
-            type: 'visit-duration-widget',
-            columns: 2,
-            data: 12.90,
-          },
-          {
-            id: 4,
-            type: 'purchases-by-channels-widget',
-            columns: 6,
-            data: 12.90,
-          },
-          {
-            id: 5,
-            type: 'visitor-insights-widget',
-            columns: 6,
-            data: 12.90,
-          },
-          {
-            id: 6,
-            type: 'today-sales-widget',
-            columns: 12,
-            data: 12.90,
-          },
-          {
-            id: 7,
-            type: 'exchange-widget',
-            columns: 3,
-            data: 12.90,
-            skeleton: {
-              minHeight: '300px'
-            }
-          },
-          {
-            id: 8,
-            type: 'customer-satisfaction-widget',
-            columns: 4,
-            data: 12.90,
-            skeleton: {
-              minHeight: '300px'
-            }
-          },
-          {
-            id: 9,
-            type: 'tasks-in-progress-widget',
-            columns: 6,
-            data: 12.90,
-            skeleton: { minHeight: '400px' }
-          },
+  }
 
-        ];
-      });
+  generateReport() {
+    if (!this.startDate || !this.endDate) {
+      console.warn('⚠️ Debes seleccionar un rango de fechas.');
+      return;
     }
+  
+    const formattedStartDate = this.startDate.toISOString().split('T')[0];
+    const formattedEndDate = this.endDate.toISOString().split('T')[0];
+  
+    this.dialog.open(OverviewComponent, {
+      width: '1000px',
+      data: { startDate: formattedStartDate, endDate: formattedEndDate, ID: this.id }
+    });
   }
 }

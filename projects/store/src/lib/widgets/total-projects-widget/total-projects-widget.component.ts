@@ -46,7 +46,7 @@ export class TotalProjectsWidgetComponent implements OnInit {
         this.updateChartData(this.difference);
       }
     }
-  
+    
     private updateChartData(newValue: number): void {
       const currentMinute = new Date().toLocaleTimeString('es-ES', { minute: '2-digit', second: '2-digit' });
   

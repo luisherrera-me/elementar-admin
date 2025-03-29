@@ -18,7 +18,7 @@ import { DeviceService } from '../../../../core/services/device/device.service';
   selector: 'app-register-device-dialog',
   standalone: true,
   imports: [
-    CommonModule, // <-- Asegúrate de importar esto
+    CommonModule,
     NgFor,  
     MatOptionModule,
     MatSelectModule,
@@ -62,8 +62,8 @@ export class RegisterDeviceDialogComponent {
       sensorName: ['', Validators.required],
       model: ['', Validators.required],
       mac: ['', [Validators.required, Validators.pattern(/^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$/i)]],
-      department: [1, Validators.required], // Departamento por defecto
-      city: [101, Validators.required], // Ciudad por defecto
+      department: [1, Validators.required],
+      city: [101, Validators.required],
       switchOutput: [false]
     });
 
@@ -76,12 +76,11 @@ export class RegisterDeviceDialogComponent {
     this.registerForm.get('city')?.setValue(this.ciudades.length ? this.ciudades[0].id : null);
   }
 
-
   onDepartamentoChange(departamentoId: number): void {
     this.ciudades = this.todasLasCiudades.filter(c => c.departamentoId === departamentoId);
     const ciudadSeleccionada = this.registerForm.value.city;
     this.registerForm.patchValue({ 
-      department: departamentoId, // <-- Asegura que el campo se actualiza
+      department: departamentoId,
       city: this.ciudades.length ? this.ciudades[0].id : null
     });
   }

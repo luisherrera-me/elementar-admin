@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class SensorService {
   private socket!: WebSocket;
-  private readonly url = 'ws://192.168.1.57:8082/ws';
+  private readonly url = 'wss://device-manager-production.up.railway.app/ws';
 
   private messageSubject = new Subject<any>(); // Subject para emitir mensajes en tiempo real
   messages$ = this.messageSubject.asObservable(); // Observable para que los componentes se suscriban

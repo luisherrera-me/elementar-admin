@@ -6,7 +6,7 @@
     <div>
       <div class="truncate text-sm font-medium text-neutral-500">Enertia Total</div>
       <div class="flex items-center gap-2">
-        <div class="text-2xl font-semibold text-neutral-800 dark:text-neutral-100">{{ widget()['data'].toFixed(1) }}kWh</div>
+        <div class="text-2xl font-semibold text-neutral-800 dark:text-neutral-100">{{ data }}kWh</div>
         <div class="flex items-baseline text-sm gap-1 font-semibold {{ difference >= 0 ? 'text-green-600' : 'text-red-600' }} dark:text-green-400">
           <mat-icon class="font-icon text-lg !w-4 !h-5">{{ difference >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
           <span class="sr-only">Increased by</span>{{ difference.toFixed(1) | number:'1.2-2' }}

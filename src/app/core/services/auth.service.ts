@@ -11,7 +11,7 @@ import { Observable, tap } from 'rxjs';
 
 export class AuthService {
 
-  private userApiUrl = 'http://192.168.1.57:8082/api';
+  private userApiUrl = 'https://device-manager-production.up.railway.app/api';
   private tokenKey = 'authKey';
   private userData = 'userData';
 

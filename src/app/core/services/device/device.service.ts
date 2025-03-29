@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface SaveDevice {
@@ -9,6 +9,29 @@ export interface SaveDevice {
   switchOutput: boolean;
   city: number;
   department: number;
+}
+
+export interface ReportData {
+  id: number;
+  date: string;
+  totalEnergyKwh: number;
+  todaysEnergyKwh: number;
+  averagePowerW: number;
+  peakPowerW: number;
+}
+export interface SaveDevice {
+  sensorName: string;
+  mac: string;
+  model: string;
+  switchOutput: boolean;
+  city: number;
+  department: number;
+}
+
+export interface SwitchHistory {
+  id: number;
+  switchOutput: boolean;
+  changedAt: string;
 }
 
 export interface Device {
@@ -34,13 +57,13 @@ export interface Device {
 }
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
-  private apiUrl = 'http://192.168.1.57:8082/api/devices';
+  private apiUrl = 'https://device-manager-production.up.railway.app/api/devices';
+  private historyDeviceUrl = 'https://device-manager-production.up.railway.app/api/switch-history/device';
+  private reportsUrl = 'https://device-manager-production.up.railway.app/api/reports';
 
   constructor(private http: HttpClient) {}
 
@@ -56,5 +79,17 @@ export class DeviceService {
     return this.http.post<Device>(this.apiUrl, device);
   }
 
+  getHistoryByDeviceId(id: number): Observable<SwitchHistory[]> {
+    return this.http.get<SwitchHistory[]>(`${this.historyDeviceUrl}/${id}`);
+  }
 
+  getReportByRange(reportId: number, startDate: string, endDate: string): Observable<ReportData[]> {
+    const url = `${this.reportsUrl}/${reportId}/range`;
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.http.get<ReportData[]>(url, { params });
+  }
+  
 }

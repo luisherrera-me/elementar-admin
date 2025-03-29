@@ -10,6 +10,7 @@
 
   <!-- Usamos *ngIf para forzar la actualización -->
   <div *ngIf="showChart">
+  
     <emr-mchart-line [data]="data"
                      [labels]="labels"
                      [tooltip]="tooltipRef"
@@ -20,7 +21,7 @@
                      markerDotSize="6"
                      responsive
                      fillAreaGradient
-                     class="h-[146px] mt-3 -mx-1 chart">
+                     class="h-[26px] mt-3 -mx-1 chart">
       <ng-template #tooltipRef let-data>
         <emr-mchart-tooltip>
           <emr-mchart-tooltip-title>{{ data.label }}</emr-mchart-tooltip-title>
